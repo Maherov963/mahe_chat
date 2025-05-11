@@ -180,7 +180,7 @@ class ChatInputAreaMobileState extends ConsumerState<ChatInputArea> {
                                 child: ReplyMessage(
                                   style: theme.textTheme.bodySmall,
                                   currentUser: widget.currentUser,
-                                  message: widget.reply,
+                                  replyPreview: widget.reply?.getPreivew(),
                                   withCancel: true,
                                   onCloseReply: widget.onCloseReply,
                                 ),

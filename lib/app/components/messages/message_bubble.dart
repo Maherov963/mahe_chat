@@ -93,8 +93,6 @@ class MessageBubble extends StatelessWidget {
           message: videoMessage,
           currentUser: currentUser,
         );
-      default:
-        return const SizedBox();
     }
   }
 
@@ -109,13 +107,13 @@ class MessageBubble extends StatelessWidget {
   }
 
   num replyWidth(TextStyle style) {
-    if (message.repliedMessage != null) {
-      if (message.repliedMessage is TextMessage) {
-        return textWidth((message.repliedMessage as TextMessage).text,
-            style.copyWith(fontSize: 10));
-      } else {
-        return messageWidth;
-      }
+    if (message.replyPreview != null) {
+      // if (message.repliedMessage is TextMessage) {
+      return textWidth((message.replyPreview as TextMessage).text,
+          style.copyWith(fontSize: 10));
+      // } else {
+      //   return messageWidth;
+      // }
     } else {
       return 0;
     }
@@ -175,11 +173,11 @@ class MessageBubble extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary, fontSize: 10),
             ),
           ),
-        if (message.repliedMessage != null)
+        if (message.replyPreview != null)
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
             child: ReplyMessage(
-              message: message.repliedMessage!,
+              replyPreview: message.replyPreview!,
               onReplyTap: onReplyTap,
               currentUser: currentUser,
               maxWidth: messageWidth,

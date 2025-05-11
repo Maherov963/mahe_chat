@@ -53,6 +53,7 @@ dependencies:
   # soundpool: ^2.4.1
   on_audio_query: ^2.9.0
   parse_server_sdk_flutter: ^8.0.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:

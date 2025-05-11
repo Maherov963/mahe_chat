@@ -50,7 +50,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
       author: widget.user,
       createdAt: DateTime.now(),
       id: ref.read(chatProvider).nextId,
-      repliedMessage: replyMessage,
+      replyPreview: replyMessage?.getPreivew(),
       roomId: widget.room.id,
     );
     _addMessage(textMessage);
@@ -69,7 +69,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
       author: widget.user,
       createdAt: DateTime.now(),
       id: ref.read(chatProvider).nextId,
-      repliedMessage: replyMessage,
+      replyPreview: replyMessage?.getPreivew(),
     );
 
     _addMessage(textMessage);

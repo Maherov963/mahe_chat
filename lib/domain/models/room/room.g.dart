@@ -113,7 +113,7 @@ Room _$RoomFromJson(Map<String, dynamic> json) => Room(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       imageUrl: json['imageUrl'] as String?,
       lastMessages: (json['lastMessages'] as List<dynamic>?)
           ?.map((e) => Message.fromJson(e as Map<String, dynamic>))

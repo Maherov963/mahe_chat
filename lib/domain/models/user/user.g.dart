@@ -85,7 +85,7 @@ class UserAdapter extends TypeAdapter<User> {
 
 User _$UserFromJson(Map<String, dynamic> json) => User(
       bio: json['bio'] as String?,
-      id: json['id'] as int?,
+      id: (json['id'] as num?)?.toInt(),
       firstName: json['firstName'] as String?,
       dateOfBirth: json['dateOfBirth'] == null
           ? null
@@ -95,7 +95,7 @@ User _$UserFromJson(Map<String, dynamic> json) => User(
       interests: (json['interests'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      gender: json['gender'] as int?,
+      gender: (json['gender'] as num?)?.toInt(),
       location: json['location'] as String?,
       password: json['password'] as String?,
       phone: json['phone'] as String?,
