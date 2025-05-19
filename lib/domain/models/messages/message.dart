@@ -50,8 +50,8 @@ abstract class Message extends HiveObject {
   }
   @HiveField(0)
 
-  /// User who sent this message.
-  final User author;
+  /// Profile who sent this message.
+  final Profile author;
   @HiveField(1)
 
   /// Created message timestamp, in ms.
@@ -98,7 +98,7 @@ abstract class Message extends HiveObject {
   ReplyPreview getPreivew();
 
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,

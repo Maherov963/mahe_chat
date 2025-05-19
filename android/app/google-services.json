@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "340584600669",
+    "project_id": "mahechat-577de",
+    "storage_bucket": "mahechat-577de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340584600669:android:a9ff849e0c036eeb4ba9b4",
+        "android_client_info": {
+          "package_name": "com.example.mahe_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340584600669-4dqmon32h511t2r07591co4op7a1tmok.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mahe_chat",
+            "certificate_hash": "fc080fa0c5e9e2096f19ba5203b4d0eccaefaf00"
+          }
+        },
+        {
+          "client_id": "340584600669-oepbv9gh0do96gd3khgkk5jvoipjstfo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUNt3QMAMH4UvAleuu-PLtOj9GRKqLRoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340584600669-oepbv9gh0do96gd3khgkk5jvoipjstfo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

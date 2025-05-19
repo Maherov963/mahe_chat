@@ -1,20 +1,32 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:mahe_chat/app/pages/home/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
+import 'package:mahe_chat/features/auth/presentation/pages/auth.dart';
+import 'package:mahe_chat/features/chat/presentation/pages/home.dart';
 
-class MyApp extends StatefulWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
   static final GlobalKey<NavigatorState> navigatorKey =
       GlobalKey<NavigatorState>();
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   // static const primeColor = Color.fromARGB(255, 209, 153, 33);
   static const primeColor = Color.fromARGB(255, 33, 124, 209);
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        ref.read(authProvider).getCashedUser();
+      },
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,7 @@ class _MyAppState extends State<MyApp> {
         Locale('en'),
       ],
       locale: const Locale("en"),
-      title: 'alkhalil chat',
+      title: 'Mahechat',
       themeMode: ThemeMode.system,
       darkTheme: ThemeData.from(
           colorScheme: ColorScheme.fromSeed(
@@ -46,6 +58,26 @@ class _MyAppState extends State<MyApp> {
           // primaryTextTheme: GoogleFonts.inderTextTheme(),
           progressIndicatorTheme: const ProgressIndicatorThemeData(
             circularTrackColor: primeColor,
+          ),
+          inputDecorationTheme: InputDecorationTheme(
+            filled: true,
+            fillColor: const Color.fromARGB(255, 52, 51, 58),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none,
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            labelStyle: TextStyle(color: Colors.grey.shade400),
+            hintStyle: TextStyle(color: Colors.grey.shade500),
+          ),
+          cardTheme: CardTheme(
+            color: const Color(0xFF1E1E1E),
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            margin: const EdgeInsets.symmetric(horizontal: 20),
           ),
           dividerTheme: const DividerThemeData(
             endIndent: 10,
@@ -65,7 +97,17 @@ class _MyAppState extends State<MyApp> {
             endIndent: 10,
             indent: 10,
           )),
-      home: const HomePage(),
+      home: HomePage(),
+      //  FutureBuilder(
+      //   future: ref.read(authProvider).getCashedUser(),
+      //   builder: (context, snapshot) {
+      //     if (ref.read(authProvider).myUser == null) {
+      //       return const AuthScreen();
+      //     } else {
+      //       return const ;
+      //     }
+      //   },
+      // ),
     );
   }
 }

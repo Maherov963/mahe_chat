@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class ImageMessageBubble extends StatefulWidget {
   final ImageMessage message;
-  final User currentUser;
+  final Profile currentUser;
   final int messageWidth;
 
   const ImageMessageBubble({
@@ -94,7 +94,7 @@ class _ImageMessageBubbleState extends State<ImageMessageBubble> {
                 onTap: () {
                   context.pushTransparentRoute(
                     MyImageView(
-                      name: widget.message.author.getFullName,
+                      name: widget.message.author.username!,
                       link: widget.message.uri,
                     ),
                   );

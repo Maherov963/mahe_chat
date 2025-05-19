@@ -24,7 +24,7 @@ class RoomAdapter extends TypeAdapter<Room> {
       name: fields[4] as String?,
       type: fields[5] as RoomType?,
       updatedAt: fields[6] as DateTime?,
-      users: (fields[7] as List).cast<User>(),
+      users: (fields[7] as List).cast<Profile>(),
     );
   }
 
@@ -124,7 +124,7 @@ Room _$RoomFromJson(Map<String, dynamic> json) => Room(
           ? null
           : DateTime.parse(json['updatedAt'] as String),
       users: (json['users'] as List<dynamic>)
-          .map((e) => User.fromJson(e as Map<String, dynamic>))
+          .map((e) => Profile.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

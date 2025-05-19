@@ -17,7 +17,7 @@ class SystemMessageAdapter extends TypeAdapter<SystemMessage> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SystemMessage(
-      author: fields[0] as User,
+      author: fields[0] as Profile,
       createdAt: fields[1] as DateTime?,
       id: fields[2] as int,
       metadata: (fields[3] as Map?)?.cast<String, dynamic>(),
@@ -80,8 +80,8 @@ class SystemMessageAdapter extends TypeAdapter<SystemMessage> {
 SystemMessage _$SystemMessageFromJson(Map<String, dynamic> json) =>
     SystemMessage(
       author: json['author'] == null
-          ? const User(id: 1)
-          : User.fromJson(json['author'] as Map<String, dynamic>),
+          ? const Profile(id: "1")
+          : Profile.fromJson(json['author'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),

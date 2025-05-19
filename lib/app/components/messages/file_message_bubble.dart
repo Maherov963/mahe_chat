@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class FileMessageBubble extends StatelessWidget {
   final FileMessage message;
-  final User currentUser;
+  final Profile currentUser;
 
   const FileMessageBubble({
     super.key,

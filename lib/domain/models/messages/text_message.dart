@@ -25,7 +25,7 @@ abstract class TextMessage extends Message {
   }) : super(type: type ?? MessageType.text);
 
   factory TextMessage({
-    required User author,
+    required Profile author,
     DateTime? createdAt,
     required int id,
     Map<String, dynamic>? metadata,
@@ -50,7 +50,7 @@ abstract class TextMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
@@ -117,7 +117,7 @@ class _TextMessage extends TextMessage {
     return ReplyPreview(
       senderId: author.id,
       id: id,
-      senderName: author.getFullName,
+      senderName: author.username!,
       text: text,
     );
   }

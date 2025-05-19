@@ -26,7 +26,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
   final Room room;
-  final User user;
+  final Profile user;
   const ChatPage({
     super.key,
     required this.user,

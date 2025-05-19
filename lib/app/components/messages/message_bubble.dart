@@ -22,7 +22,7 @@ class MessageBubble extends StatelessWidget {
   final Message message;
   final bool previousSameAuthor;
   final int messageWidth;
-  final User currentUser;
+  final Profile currentUser;
   final void Function(Message)? onSwipe;
   final void Function(int)? onReplyTap;
   final void Function(Message)? onMessageTap;
@@ -152,7 +152,7 @@ class MessageBubble extends StatelessWidget {
     final widthName = (isMine || previousSameAuthor)
         ? 0
         : textWidth(
-                message.author.getFullName, textStyle.copyWith(fontSize: 10)) +
+                message.author.username!, textStyle.copyWith(fontSize: 10)) +
             8;
     final isTimeInSameLine =
         widthText + extraSpaceWidth < (messageWidth - 16) ||
@@ -168,7 +168,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2, left: 4, right: 4),
             child: Text(
-              message.author.getFullName,
+              message.author.username!,
               style: textStyle.copyWith(
                   color: Theme.of(context).colorScheme.primary, fontSize: 10),
             ),

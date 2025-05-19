@@ -22,7 +22,7 @@ const unreadHeader = "UN_READ_HEADER";
 
 class Chat extends ConsumerStatefulWidget {
   final List<Message> messages;
-  final User user;
+  final Profile user;
   final AutoScrollController controller;
   final void Function(Message)? handleSwipe;
   final void Function(Message)? handleMessageTap;

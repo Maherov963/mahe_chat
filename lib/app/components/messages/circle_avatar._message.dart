@@ -12,11 +12,11 @@ class UserAvatar extends StatelessWidget {
   });
 
   // /// Author to show image and name initials from.
-  // final User author;
+  // final Profile author;
   // final dynamic tag;
 
   // /// Called when user taps on an avatar.
-  // final void Function(User)? onAvatarTap;
+  // final void Function(Profile)? onAvatarTap;
 
   @override
   Widget build(BuildContext context) {

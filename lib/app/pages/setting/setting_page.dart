@@ -52,7 +52,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                     const Divider(height: 0),
                     ListTile(
-                      title: getListTitle("User Name"),
+                      title: getListTitle("Profile Name"),
                       subtitle: getSubTitle("Maherov"),
                       leading: const Icon(Icons.account_circle),
                       onTap: () {},

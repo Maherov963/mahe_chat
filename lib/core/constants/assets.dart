@@ -1,6 +1,6 @@
 abstract class Assets {
   static Audio get audio => Audio();
-  static get image => Image;
+  static Image get image => Image();
 }
 
 class Audio {
@@ -8,4 +8,6 @@ class Audio {
   final String capture = "assets/audios/Capture.mp3";
 }
 
-abstract class Image {}
+class Image {
+  final String profile = "assets/images/profile.png";
+}

@@ -49,7 +49,7 @@ class AudioMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
@@ -69,7 +69,7 @@ class AudioMessage extends Message {
     return ReplyPreview(
       id: id,
       senderId: author.id,
-      senderName: author.getFullName,
+      senderName: author.username!,
       text: name,
     );
   }

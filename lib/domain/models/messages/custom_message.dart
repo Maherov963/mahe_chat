@@ -27,7 +27,7 @@ class CustomMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
@@ -47,7 +47,7 @@ class CustomMessage extends Message {
     return ReplyPreview(
       id: id,
       senderId: author.id,
-      senderName: author.getFullName,
+      senderName: author.username!,
       text: "",
     );
   }

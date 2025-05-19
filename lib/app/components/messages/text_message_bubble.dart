@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 class TextMessageBubble extends StatelessWidget {
   final TextMessage message;
-  final User currentUser;
+  final Profile currentUser;
   final String extraSpace;
   final TextStyle style;
 

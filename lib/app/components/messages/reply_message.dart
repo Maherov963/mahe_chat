@@ -20,7 +20,7 @@ class ReplyMessage extends ConsumerWidget {
   final void Function(int)? onReplyTap;
   final void Function()? onCloseReply;
   final ReplyPreview? replyPreview;
-  final User currentUser;
+  final Profile currentUser;
   final int? minWidth;
   final int? maxWidth;
   final TextStyle? style;

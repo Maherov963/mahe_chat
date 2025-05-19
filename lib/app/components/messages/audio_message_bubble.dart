@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AudioMessageBubble extends StatefulWidget {
-  final User currentUser;
+  final Profile currentUser;
   final AudioMessage message;
   const AudioMessageBubble({
     super.key,

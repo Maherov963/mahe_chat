@@ -10,7 +10,7 @@ part 'system_message.g.dart';
 @HiveType(typeId: 6)
 class SystemMessage extends Message {
   SystemMessage({
-    super.author = const User(id: 1),
+    super.author = const Profile(id: "1"),
     super.createdAt,
     required super.id,
     super.metadata,
@@ -38,14 +38,14 @@ class SystemMessage extends Message {
     return ReplyPreview(
       id: id,
       senderId: author.id,
-      senderName: author.getFullName,
+      senderName: author.username!,
       text: text,
     );
   }
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,

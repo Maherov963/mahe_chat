@@ -20,7 +20,7 @@ class ReplyPreviewAdapter extends TypeAdapter<ReplyPreview> {
       id: fields[0] as int,
       senderName: fields[1] as String,
       text: fields[2] as String,
-      senderId: fields[3] as int?,
+      senderId: fields[3] as String?,
     );
   }
 
@@ -57,7 +57,7 @@ ReplyPreview _$ReplyPreviewFromJson(Map<String, dynamic> json) => ReplyPreview(
       id: (json['id'] as num).toInt(),
       senderName: json['senderName'] as String,
       text: json['text'] as String,
-      senderId: (json['senderId'] as num?)?.toInt(),
+      senderId: (json['senderId'] as String),
     );
 
 Map<String, dynamic> _$ReplyPreviewToJson(ReplyPreview instance) =>

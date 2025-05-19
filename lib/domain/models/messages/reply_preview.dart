@@ -12,7 +12,7 @@ class ReplyPreview {
   @HiveField(2)
   final String text;
   @HiveField(3)
-  final int? senderId;
+  final String? senderId;
   const ReplyPreview({
     required this.id,
     required this.senderName,

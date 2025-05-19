@@ -17,7 +17,7 @@ class TextMessageAdapter extends TypeAdapter<TextMessage> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TextMessage(
-      author: fields[0] as User,
+      author: fields[0] as Profile,
       createdAt: fields[1] as DateTime?,
       id: fields[2] as int,
       metadata: (fields[3] as Map?)?.cast<String, dynamic>(),
@@ -78,7 +78,7 @@ class TextMessageAdapter extends TypeAdapter<TextMessage> {
 // **************************************************************************
 
 TextMessage _$TextMessageFromJson(Map<String, dynamic> json) => TextMessage(
-      author: User.fromJson(json['author'] as Map<String, dynamic>),
+      author: Profile.fromJson(json['author'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
