@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class CustomMessageBubble extends StatelessWidget {
   final CustomMessage message;
-  final User currentUser;
+  final Profile currentUser;
 
   const CustomMessageBubble({
     super.key,

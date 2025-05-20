@@ -22,7 +22,7 @@ class MessageBubble extends StatelessWidget {
   final Message message;
   final bool previousSameAuthor;
   final int messageWidth;
-  final User currentUser;
+  final Profile currentUser;
   final void Function(Message)? onSwipe;
   final void Function(int)? onReplyTap;
   final void Function(Message)? onMessageTap;
@@ -93,8 +93,6 @@ class MessageBubble extends StatelessWidget {
           message: videoMessage,
           currentUser: currentUser,
         );
-      default:
-        return const SizedBox();
     }
   }
 
@@ -109,13 +107,13 @@ class MessageBubble extends StatelessWidget {
   }
 
   num replyWidth(TextStyle style) {
-    if (message.repliedMessage != null) {
-      if (message.repliedMessage is TextMessage) {
-        return textWidth((message.repliedMessage as TextMessage).text,
-            style.copyWith(fontSize: 10));
-      } else {
-        return messageWidth;
-      }
+    if (message.replyPreview != null) {
+      // if (message.repliedMessage is TextMessage) {
+      return textWidth((message.replyPreview as TextMessage).text,
+          style.copyWith(fontSize: 10));
+      // } else {
+      //   return messageWidth;
+      // }
     } else {
       return 0;
     }
@@ -154,7 +152,7 @@ class MessageBubble extends StatelessWidget {
     final widthName = (isMine || previousSameAuthor)
         ? 0
         : textWidth(
-                message.author.getFullName, textStyle.copyWith(fontSize: 10)) +
+                message.author.username!, textStyle.copyWith(fontSize: 10)) +
             8;
     final isTimeInSameLine =
         widthText + extraSpaceWidth < (messageWidth - 16) ||
@@ -170,16 +168,16 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 2, left: 4, right: 4),
             child: Text(
-              message.author.getFullName,
+              message.author.username!,
               style: textStyle.copyWith(
                   color: Theme.of(context).colorScheme.primary, fontSize: 10),
             ),
           ),
-        if (message.repliedMessage != null)
+        if (message.replyPreview != null)
           Padding(
             padding: const EdgeInsets.only(top: 4, left: 4, right: 4),
             child: ReplyMessage(
-              message: message.repliedMessage!,
+              replyPreview: message.replyPreview!,
               onReplyTap: onReplyTap,
               currentUser: currentUser,
               maxWidth: messageWidth,

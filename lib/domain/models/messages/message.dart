@@ -1,6 +1,8 @@
 import 'package:mahe_chat/domain/models/messages/text_message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:hive/hive.dart';
+
+import 'reply_preview.dart';
 export 'text_message.dart';
 part 'message.g.dart';
 
@@ -11,7 +13,7 @@ abstract class Message extends HiveObject {
     required this.id,
     this.metadata,
     this.remoteId,
-    this.repliedMessage,
+    this.replyPreview,
     this.roomId,
     this.showStatus,
     this.status = Status.sending,
@@ -48,8 +50,8 @@ abstract class Message extends HiveObject {
   }
   @HiveField(0)
 
-  /// User who sent this message.
-  final User author;
+  /// Profile who sent this message.
+  final Profile author;
   @HiveField(1)
 
   /// Created message timestamp, in ms.
@@ -69,7 +71,7 @@ abstract class Message extends HiveObject {
   @HiveField(5)
 
   /// Message that is being replied to with the current message.
-  final Message? repliedMessage;
+  final ReplyPreview? replyPreview;
   @HiveField(6)
 
   /// ID of the room where this message is sent.
@@ -93,14 +95,15 @@ abstract class Message extends HiveObject {
 
   /// Converts a particular message to the map representation, serializable to JSON.
   Map<String, dynamic> toJson();
+  ReplyPreview getPreivew();
 
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     Status? status,
     DateTime? updatedAt,

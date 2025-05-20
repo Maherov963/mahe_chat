@@ -30,7 +30,7 @@ class ChatInputArea extends ConsumerStatefulWidget {
   });
   final Message? reply;
   final FocusNode? focusNode;
-  final User currentUser;
+  final Profile currentUser;
   final void Function(String)? onSendText;
   final void Function()? onAudioAttach;
   final void Function()? onCameraPressed;
@@ -180,7 +180,7 @@ class ChatInputAreaMobileState extends ConsumerState<ChatInputArea> {
                                 child: ReplyMessage(
                                   style: theme.textTheme.bodySmall,
                                   currentUser: widget.currentUser,
-                                  message: widget.reply,
+                                  replyPreview: widget.reply?.getPreivew(),
                                   withCancel: true,
                                   onCloseReply: widget.onCloseReply,
                                 ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class SystemMessageBubble extends StatelessWidget {
   final SystemMessage message;
-  final User currentUser;
+  final Profile currentUser;
   final int messageWidth;
   const SystemMessageBubble({
     super.key,

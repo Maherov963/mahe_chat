@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class VideoMessageBubble extends StatelessWidget {
   final VideoMessage message;
-  final User currentUser;
+  final Profile currentUser;
 
   const VideoMessageBubble({
     super.key,

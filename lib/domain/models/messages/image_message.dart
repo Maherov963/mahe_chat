@@ -1,6 +1,8 @@
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 
+import 'reply_preview.dart';
+
 class ImageMessage extends Message {
   /// Creates an image message.
   ImageMessage({
@@ -12,7 +14,7 @@ class ImageMessage extends Message {
     super.metadata,
     required this.name,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     required this.size,
@@ -44,12 +46,12 @@ class ImageMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -57,5 +59,15 @@ class ImageMessage extends Message {
     DateTime? updatedAt,
   }) {
     return this;
+  }
+
+  @override
+  ReplyPreview getPreivew() {
+    return ReplyPreview(
+      id: id,
+      senderId: author.id,
+      senderName: author.username!,
+      text: name,
+    );
   }
 }

@@ -22,7 +22,7 @@ class MessageBox extends ConsumerStatefulWidget {
   final Message message;
   final bool previousSameAuthor;
   final int messageWidth;
-  final User currentUser;
+  final Profile currentUser;
   final void Function(Message)? onSwipe;
   final void Function(int)? onReplyTap;
   final void Function(Message)? onMessageTap;

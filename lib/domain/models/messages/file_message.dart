@@ -1,6 +1,8 @@
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 
+import 'reply_preview.dart';
+
 class FileMessage extends Message {
   /// Creates a file message.
   FileMessage({
@@ -12,7 +14,7 @@ class FileMessage extends Message {
     this.mimeType,
     required this.name,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     required this.size,
@@ -46,12 +48,12 @@ class FileMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -59,5 +61,15 @@ class FileMessage extends Message {
     DateTime? updatedAt,
   }) {
     return this;
+  }
+
+  @override
+  ReplyPreview getPreivew() {
+    return ReplyPreview(
+      id: id,
+      senderId: author.id,
+      senderName: author.username!,
+      text: name,
+    );
   }
 }

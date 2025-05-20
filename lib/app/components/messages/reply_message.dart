@@ -1,14 +1,13 @@
-import 'package:mahe_chat/device/utils.dart';
-import 'package:mahe_chat/domain/models/messages/audio_message.dart';
-import 'package:mahe_chat/domain/models/messages/file_message.dart';
-import 'package:mahe_chat/domain/models/messages/message.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/domain/models/messages/reply_preview.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
+import 'package:mahe_chat/domain/providers/providers.dart';
 
-class ReplyMessage extends StatelessWidget {
+class ReplyMessage extends ConsumerWidget {
   const ReplyMessage({
     super.key,
-    required this.message,
+    required this.replyPreview,
     this.onReplyTap,
     this.withCancel = false,
     this.onCloseReply,
@@ -20,84 +19,85 @@ class ReplyMessage extends StatelessWidget {
   final bool withCancel;
   final void Function(int)? onReplyTap;
   final void Function()? onCloseReply;
-  final Message? message;
-  final User currentUser;
+  final ReplyPreview? replyPreview;
+  final Profile currentUser;
   final int? minWidth;
   final int? maxWidth;
   final TextStyle? style;
 
   Widget _buildReply() {
-    switch (message?.type) {
-      case MessageType.image:
-        return const Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.photo,
-              color: Colors.grey,
-              size: 20,
-            ),
-            Text(
-              " Photo",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        );
-      case MessageType.file:
-        final fileMessage = message as FileMessage;
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.description,
-              color: Colors.grey,
-              size: 20,
-            ),
-            Text(
-              fileMessage.name,
-              style: const TextStyle(color: Colors.grey),
-            ),
-          ],
-        );
-      case MessageType.audio:
-        final audioMessage = message as AudioMessage;
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Icons.mic,
-              color: Colors.grey,
-              size: 20,
-            ),
-            Text(
-              "Voice message (${getTimeString(audioMessage.duration)})",
-              style: const TextStyle(color: Colors.grey),
-            ),
-          ],
-        );
-      case MessageType.text:
-        final textMessage = message as TextMessage;
-        return Text(
-          textMessage.text,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-          style: style?.copyWith(color: Colors.grey),
-        );
-      default:
-        return Text(message?.type.toString() ?? "error");
-    }
+    // switch (message?.type) {
+    //   case MessageType.image:
+    //     return const Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       children: [
+    //         Icon(
+    //           Icons.photo,
+    //           color: Colors.grey,
+    //           size: 20,
+    //         ),
+    //         Text(
+    //           " Photo",
+    //           style: TextStyle(color: Colors.grey),
+    //         ),
+    //       ],
+    //     );
+    //   case MessageType.file:
+    //     final fileMessage = message as FileMessage;
+    //     return Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       children: [
+    //         const Icon(
+    //           Icons.description,
+    //           color: Colors.grey,
+    //           size: 20,
+    //         ),
+    //         Text(
+    //           fileMessage.name,
+    //           style: const TextStyle(color: Colors.grey),
+    //         ),
+    //       ],
+    //     );
+    //   case MessageType.audio:
+    //     final audioMessage = message as AudioMessage;
+    //     return Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       children: [
+    //         const Icon(
+    //           Icons.mic,
+    //           color: Colors.grey,
+    //           size: 20,
+    //         ),
+    //         Text(
+    //           "Voice message (${getTimeString(audioMessage.duration)})",
+    //           style: const TextStyle(color: Colors.grey),
+    //         ),
+    //       ],
+    //     );
+    //   case MessageType.text:
+    //     final textMessage = message as TextMessage;
+    return Text(
+      replyPreview?.text ?? "error",
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
+      style: style?.copyWith(color: Colors.grey),
+    );
+    //   default:
+    //     return Text(message?.type.toString() ?? "error");
+    // }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final isMine = message?.author == currentUser;
+  Widget build(context, ref) {
+    final me = ref.read(authProvider.notifier).myUser!;
+    final isMine = replyPreview?.senderId == me.id;
     final theme = Theme.of(context).colorScheme;
     final color = isMine ? theme.primary : theme.inversePrimary;
     return InkWell(
       onTap: onReplyTap == null
           ? null
           : () {
-              onReplyTap!(message!.id);
+              onReplyTap!(replyPreview!.id);
             },
       child: CustomPaint(
         painter: MyPaint(color: color),
@@ -118,9 +118,7 @@ class ReplyMessage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          message?.author == currentUser
-                              ? "You"
-                              : message?.author.getFullName ?? "error",
+                          isMine ? "You" : replyPreview?.senderName ?? "",
                           style: style?.copyWith(
                               color: Theme.of(context).colorScheme.primary),
                         ),
@@ -135,9 +133,7 @@ class ReplyMessage extends StatelessWidget {
                       ],
                     )
                   : Text(
-                      message?.author == currentUser
-                          ? "You"
-                          : message?.author.getFullName ?? "error",
+                      isMine ? "You" : replyPreview!.senderName,
                       style: style,
                     ),
               _buildReply(),

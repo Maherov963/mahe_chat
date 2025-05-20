@@ -38,7 +38,7 @@ abstract class Room extends HiveObject {
     String? name,
     required RoomType? type,
     DateTime? updatedAt,
-    required List<User> users,
+    required List<Profile> users,
   }) = _Room;
 
   /// Creates room from a map (decoded JSON).
@@ -61,7 +61,7 @@ abstract class Room extends HiveObject {
   @HiveField(6)
   final DateTime? updatedAt;
   @HiveField(7)
-  final List<User> users;
+  final List<Profile> users;
 
   Room copyWith({
     DateTime? createdAt,
@@ -71,7 +71,7 @@ abstract class Room extends HiveObject {
     String? name,
     RoomType? type,
     DateTime? updatedAt,
-    List<User>? users,
+    List<Profile>? users,
   });
 
   /// Converts room to the map representation, encodable to JSON.
@@ -101,7 +101,7 @@ class _Room extends Room {
     dynamic name = _Unset,
     dynamic type = _Unset,
     dynamic updatedAt = _Unset,
-    List<User>? users,
+    List<Profile>? users,
   }) =>
       _Room(
         createdAt: createdAt == _Unset ? this.createdAt : createdAt,

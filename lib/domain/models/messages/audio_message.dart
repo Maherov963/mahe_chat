@@ -1,4 +1,5 @@
 import 'package:mahe_chat/domain/models/messages/message.dart';
+import 'package:mahe_chat/domain/models/messages/reply_preview.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 
 class AudioMessage extends Message {
@@ -11,7 +12,7 @@ class AudioMessage extends Message {
     this.mediaType,
     required this.name,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     required this.size,
@@ -48,12 +49,12 @@ class AudioMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -61,5 +62,15 @@ class AudioMessage extends Message {
     DateTime? updatedAt,
   }) {
     return this;
+  }
+
+  @override
+  ReplyPreview getPreivew() {
+    return ReplyPreview(
+      id: id,
+      senderId: author.id,
+      senderName: author.username!,
+      text: name,
+    );
   }
 }

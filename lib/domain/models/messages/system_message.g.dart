@@ -17,12 +17,12 @@ class SystemMessageAdapter extends TypeAdapter<SystemMessage> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return SystemMessage(
-      author: fields[0] as User,
+      author: fields[0] as Profile,
       createdAt: fields[1] as DateTime?,
       id: fields[2] as int,
       metadata: (fields[3] as Map?)?.cast<String, dynamic>(),
       remoteId: fields[4] as int?,
-      repliedMessage: fields[5] as Message?,
+      replyPreview: fields[5] as ReplyPreview?,
       roomId: fields[6] as int?,
       showStatus: fields[7] as bool?,
       status: fields[8] as Status?,
@@ -49,7 +49,7 @@ class SystemMessageAdapter extends TypeAdapter<SystemMessage> {
       ..writeByte(4)
       ..write(obj.remoteId)
       ..writeByte(5)
-      ..write(obj.repliedMessage)
+      ..write(obj.replyPreview)
       ..writeByte(6)
       ..write(obj.roomId)
       ..writeByte(7)
@@ -80,18 +80,18 @@ class SystemMessageAdapter extends TypeAdapter<SystemMessage> {
 SystemMessage _$SystemMessageFromJson(Map<String, dynamic> json) =>
     SystemMessage(
       author: json['author'] == null
-          ? const User(id: 1)
-          : User.fromJson(json['author'] as Map<String, dynamic>),
+          ? const Profile(id: "1")
+          : Profile.fromJson(json['author'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       metadata: json['metadata'] as Map<String, dynamic>?,
-      remoteId: json['remoteId'] as int?,
-      repliedMessage: json['repliedMessage'] == null
+      remoteId: (json['remoteId'] as num?)?.toInt(),
+      replyPreview: json['replyPreview'] == null
           ? null
-          : Message.fromJson(json['repliedMessage'] as Map<String, dynamic>),
-      roomId: json['roomId'] as int?,
+          : ReplyPreview.fromJson(json['replyPreview'] as Map<String, dynamic>),
+      roomId: (json['roomId'] as num?)?.toInt(),
       showStatus: json['showStatus'] as bool?,
       status: $enumDecodeNullable(_$StatusEnumMap, json['status']) ??
           Status.sending,
@@ -109,7 +109,7 @@ Map<String, dynamic> _$SystemMessageToJson(SystemMessage instance) =>
       'id': instance.id,
       'metadata': instance.metadata,
       'remoteId': instance.remoteId,
-      'repliedMessage': instance.repliedMessage,
+      'replyPreview': instance.replyPreview,
       'roomId': instance.roomId,
       'showStatus': instance.showStatus,
       'status': _$StatusEnumMap[instance.status],

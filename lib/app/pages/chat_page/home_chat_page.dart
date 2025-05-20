@@ -135,7 +135,7 @@ class HomeChatPageState extends ConsumerState<HomeChatPage> {
     if (lastMessages?.isNotEmpty ?? false) {
       final message = (lastMessages!.first as TextMessage);
       return Text(
-        "${message.author.getFullName}: ${message.text}",
+        "${message.author.username}: ${message.text}",
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       );

@@ -41,7 +41,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       },
                       decoration: BoxDecoration(
                           color: Theme.of(context).appBarTheme.backgroundColor),
-                      accountName: Text(auth.myUser!.getFullName),
+                      accountName: Text(auth.myUser!.username!),
                       accountEmail: Text(auth.myUser!.phone!),
                       currentAccountPicture: GestureDetector(
                         onTap: () {},
@@ -62,35 +62,36 @@ class _MyDrawerState extends State<MyDrawer> {
                         child: ListView(
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
-                              ListTile(
-                                title: Text(auth.user1.getFullName),
-                                trailing: const CircleAvatar(
-                                  radius: 14,
-                                  // backgroundColor: color3,
-                                  // foregroundColor: color6,
-                                  child: Text("16",
-                                      style: TextStyle(fontSize: 12)),
-                                ),
-                                onTap: () async {
-                                  Navigator.pop(context);
-                                  authRead.getStoredAccount();
-                                },
-                              ),
-                              ListTile(
-                                title: Text(auth.user2.getFullName),
-                                trailing: const CircleAvatar(
-                                  radius: 14,
-                                  // backgroundColor: color3,
-                                  // foregroundColor: color6,
-                                  child: Text("16",
-                                      style: TextStyle(fontSize: 12)),
-                                ),
-                                onTap: () async {
-                                  Navigator.pop(context);
+                              // ListTile(
+                              //   title: Text(auth.user1.getFullName),
+                              //   trailing: const CircleAvatar(
+                              //     radius: 14,
+                              //     // backgroundColor: color3,
+                              //     // foregroundColor: color6,
+                              //     child: Text("16",
+                              //         style: TextStyle(fontSize: 12)),
+                              //   ),
+                              //   onTap: () async {
+                              //     Navigator.pop(context);
+                              //     authRead.getStoredAccount();
+                              //   },
+                              // ),
+                              // ListTile(
+                              //   title: Text(auth.user2.getFullName),
+                              //   trailing: const CircleAvatar(
+                              //     radius: 14,
+                              //     // backgroundColor: color3,
+                              //     // foregroundColor: color6,
+                              //     child: Text("16",
+                              //         style: TextStyle(fontSize: 12)),
+                              //   ),
+                              //   onTap: () async {
+                              //     Navigator.pop(context);
 
-                                  authRead.setUser2();
-                                },
-                              ),
+                              //     authRead.setUser2();
+                              //   },
+                              // ),
+
                               ListTile(
                                 title: const Text("Add Account"),
                                 leading: const Icon(Icons.add),

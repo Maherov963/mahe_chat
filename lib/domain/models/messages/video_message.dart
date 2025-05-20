@@ -9,7 +9,7 @@ abstract class VideoMessage extends Message {
     super.metadata,
     required this.name,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     required this.size,

@@ -1,29 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'user.g.dart';
 
 @JsonSerializable()
 @HiveType(typeId: 0)
-class User extends Equatable {
-  const User({
+class Profile extends Equatable {
+  const Profile({
     this.bio,
     this.id,
-    this.firstName,
-    this.dateOfBirth,
     this.email,
-    this.lastName,
-    this.interests,
-    this.gender,
-    this.location,
     this.password,
     this.phone,
     this.profilePicture,
     this.token,
+    this.age,
     this.username,
   });
   @HiveField(0)
-  final int? id;
+  final String? id;
   @HiveField(1)
   final String? username;
   @HiveField(2)
@@ -35,30 +31,24 @@ class User extends Equatable {
   @HiveField(5)
   final String? password;
   @HiveField(6)
-  final String? firstName;
+  final int? age;
   @HiveField(7)
-  final String? lastName;
-  @HiveField(8)
-  final DateTime? dateOfBirth;
-  @HiveField(9)
-  final int? gender;
-  @HiveField(10)
   final String? profilePicture;
-  @HiveField(11)
+  @HiveField(8)
   final String? bio;
-  @HiveField(12)
-  final String? location;
-  @HiveField(13)
-  final List<String>? interests;
-  String get getFullName => firstName == null && lastName == null
-      ? "$username"
-      : "$firstName $lastName";
-
+  factory Profile.fromUser(User user) {
+    return Profile(
+      id: user.uid,
+      token: user.refreshToken,
+      username: user.displayName,
+      email: user.email,
+    );
+  }
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+  factory Profile.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
-  User copy() => User.fromJson(toJson());
+  Profile copy() => Profile.fromJson(toJson());
   @override
   List<Object?> get props => [
         id,

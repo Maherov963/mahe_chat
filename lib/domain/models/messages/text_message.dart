@@ -2,6 +2,8 @@ import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:hive/hive.dart';
 import 'package:json_annotation/json_annotation.dart';
+
+import 'reply_preview.dart';
 part 'text_message.g.dart';
 
 @JsonSerializable()
@@ -13,7 +15,7 @@ abstract class TextMessage extends Message {
     required super.id,
     super.metadata,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     super.status,
@@ -23,12 +25,12 @@ abstract class TextMessage extends Message {
   }) : super(type: type ?? MessageType.text);
 
   factory TextMessage({
-    required User author,
+    required Profile author,
     DateTime? createdAt,
     required int id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -48,12 +50,13 @@ abstract class TextMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    int? repliedMessageId,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -70,7 +73,7 @@ class _TextMessage extends TextMessage {
     required super.id,
     super.metadata,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     super.status,
@@ -87,7 +90,8 @@ class _TextMessage extends TextMessage {
     dynamic metadata = _Unset,
     dynamic previewData = _Unset,
     dynamic remoteId = _Unset,
-    dynamic repliedMessage = _Unset,
+    dynamic repliedMessageId = _Unset,
+    dynamic replyPreview = _Unset,
     dynamic roomId = _Unset,
     dynamic showStatus = _Unset,
     dynamic status = _Unset,
@@ -100,14 +104,23 @@ class _TextMessage extends TextMessage {
         id: id ?? this.id,
         metadata: metadata == _Unset ? this.metadata : metadata,
         remoteId: remoteId == _Unset ? this.remoteId : remoteId,
-        repliedMessage:
-            repliedMessage == _Unset ? this.repliedMessage : repliedMessage,
+        replyPreview: replyPreview == _Unset ? this.replyPreview : replyPreview,
         roomId: roomId == _Unset ? this.roomId : roomId,
         showStatus: showStatus == _Unset ? this.showStatus : showStatus,
         status: status == _Unset ? this.status : status,
         text: text ?? this.text,
         updatedAt: updatedAt == _Unset ? this.updatedAt : updatedAt,
       );
+
+  @override
+  ReplyPreview getPreivew() {
+    return ReplyPreview(
+      senderId: author.id,
+      id: id,
+      senderName: author.username!,
+      text: text,
+    );
+  }
 }
 
 class _Unset {}

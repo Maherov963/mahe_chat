@@ -1,6 +1,8 @@
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 
+import 'reply_preview.dart';
+
 class CustomMessage extends Message {
   CustomMessage({
     required super.author,
@@ -8,7 +10,7 @@ class CustomMessage extends Message {
     required super.id,
     super.metadata,
     super.remoteId,
-    super.repliedMessage,
+    super.replyPreview,
     super.roomId,
     super.showStatus,
     super.status,
@@ -25,12 +27,12 @@ class CustomMessage extends Message {
 
   @override
   Message copyWith({
-    User? author,
+    Profile? author,
     DateTime? createdAt,
     int? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
-    Message? repliedMessage,
+    ReplyPreview? replyPreview,
     int? roomId,
     bool? showStatus,
     Status? status,
@@ -38,5 +40,15 @@ class CustomMessage extends Message {
     DateTime? updatedAt,
   }) {
     return this;
+  }
+
+  @override
+  ReplyPreview getPreivew() {
+    return ReplyPreview(
+      id: id,
+      senderId: author.id,
+      senderName: author.username!,
+      text: "",
+    );
   }
 }

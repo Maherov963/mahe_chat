@@ -65,7 +65,7 @@ class _UserProfileAppBarMobileState extends State<UserProfileAppBar>
       ),
     );
 
-    // User name clipping, from 40% - 80%
+    // Profile name clipping, from 40% - 80%
     _nameWidthAnimation = Tween<double>(
       begin: 0.4,
       end: 1,
@@ -126,7 +126,7 @@ class _UserProfileAppBarMobileState extends State<UserProfileAppBar>
           expandedHeight: _expandedHeight,
           flexibleSpace: Stack(
             children: [
-              // User dp and user name.
+              // Profile dp and user name.
               // Using nested Stack to hide username behind user dp.
               Positioned.directional(
                 textDirection: Directionality.of(context),
@@ -144,7 +144,7 @@ class _UserProfileAppBarMobileState extends State<UserProfileAppBar>
                   alignment: Alignment.center,
                   clipBehavior: Clip.none,
                   children: [
-                    // User name
+                    // Profile name
                     Positioned.directional(
                       textDirection: Directionality.of(context),
                       start: _nameLeftAnimation.value,
