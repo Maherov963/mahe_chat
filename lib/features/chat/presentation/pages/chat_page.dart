@@ -1,36 +1,28 @@
-import 'dart:io';
-import 'package:mahe_chat/app/components/certified_account.dart';
-import 'package:mahe_chat/app/components/chat_input/chat_input_area.dart';
-import 'package:mahe_chat/app/components/image_handler.dart';
-import 'package:mahe_chat/app/components/my_snackbar.dart';
-import 'package:mahe_chat/app/pages/chat_page/chat.dart';
-import 'package:mahe_chat/app/pages/profile/user_profile.dart';
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:mahe_chat/app/utils/assets/assets_images.dart';
-import 'package:mahe_chat/app/utils/plugins/my_photo_picker.dart';
 import 'package:mahe_chat/domain/models/room/room.dart';
 import 'package:mahe_chat/domain/providers/notifiers/chat_provider.dart';
 import 'package:mahe_chat/app/utils/widgets/my_popup_menu.dart';
-import 'package:mahe_chat/domain/models/messages/audio_message.dart';
-import 'package:mahe_chat/domain/models/messages/file_message.dart';
-import 'package:mahe_chat/domain/models/messages/image_message.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
-import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/chat/data/remote/chat_api.dart';
+import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:mahe_chat/features/music.dart';
-import 'package:open_filex/open_filex.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
+import '../components/certified_account.dart';
+import '../components/chat_input/chat_input_area.dart';
+import '../components/image_handler.dart';
+import 'chat.dart';
+
 class ChatPage extends ConsumerStatefulWidget {
-  final Room room;
-  final Profile user;
+  final Conversation? conversation;
   const ChatPage({
     super.key,
-    required this.user,
-    required this.room,
+    this.conversation,
   });
 
   @override
@@ -45,15 +37,15 @@ class ChatPageState extends ConsumerState<ChatPage> {
   Message? replyMessage;
 
   void _handleSendPressed(String text) {
-    final textMessage = TextMessage(
-      text: text,
-      author: widget.user,
-      createdAt: DateTime.now(),
-      id: ref.read(chatProvider).nextId,
-      replyPreview: replyMessage?.getPreivew(),
-      roomId: widget.room.id,
-    );
-    _addMessage(textMessage);
+    // final textMessage = TextMessage(
+    //   text: text,
+    //   author: widget.user,
+    //   createdAt: DateTime.now(),
+    //   id: ref.read(chatProvider).nextId,
+    //   replyPreview: replyMessage?.getPreivew(),
+    //   roomId: widget.room.id,
+    // );
+    // _addMessage(textMessage);
   }
 
   void _handleSendRecord(
@@ -61,18 +53,18 @@ class ChatPageState extends ConsumerState<ChatPage> {
     num size,
     String uri,
   ) {
-    final textMessage = AudioMessage(
-      duration: duration,
-      name: "Record",
-      size: size,
-      uri: uri,
-      author: widget.user,
-      createdAt: DateTime.now(),
-      id: ref.read(chatProvider).nextId,
-      replyPreview: replyMessage?.getPreivew(),
-    );
+    // final textMessage = AudioMessage(
+    //   duration: duration,
+    //   name: "Record",
+    //   size: size,
+    //   uri: uri,
+    //   author: widget.user,
+    //   createdAt: DateTime.now(),
+    //   id: ref.read(chatProvider).nextId,
+    //   replyPreview: replyMessage?.getPreivew(),
+    // );
 
-    _addMessage(textMessage);
+    // _addMessage(textMessage);
   }
 
   void _handleFileSelection() async {
@@ -118,11 +110,11 @@ class ChatPageState extends ConsumerState<ChatPage> {
   }
 
   void _handleMessageTap(Message message) async {
-    if (message is FileMessage) {
-      var localPath = message.uri;
+    // if (message is FileMessage) {
+    //   var localPath = message.uri;
 
-      await OpenFilex.open(localPath);
-    }
+    //   await OpenFilex.open(localPath);
+    // }
   }
 
   void _handleGalleryTap() async {
@@ -149,7 +141,22 @@ class ChatPageState extends ConsumerState<ChatPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final select = ref.watch(messageSelectProvider);
+    final user = ref.read(authProvider).myUser;
     final selectRead = ref.read(messageSelectProvider.notifier);
+    // Call the function to get the stream
+    final conversationStream =
+        ChatApi().getMessagesStream(widget.conversation!.id!);
+
+    // Check if the stream is empty (user not logged in case)
+    if (conversationStream == Stream.empty()) {
+      // Return a widget indicating the user needs to log in or similar
+      return Scaffold(
+        appBar: AppBar(title: Text('My Chats')),
+        body: Center(
+          child: Text('Please log in to see your conversations.'),
+        ),
+      );
+    }
     return PopScope(
       canPop: select.isEmpty,
       onPopInvoked: (didPop) {
@@ -189,14 +196,45 @@ class ChatPageState extends ConsumerState<ChatPage> {
                   builder: (context, ref, child) {
                     final chat = ref.watch(chatProvider);
                     return Expanded(
-                      child: Chat(
-                        controller: itemScrollController,
-                        messages: chat.messages,
-                        user: widget.user,
-                        handleMessageTap:
-                            select.isEmpty ? _handleMessageTap : null,
-                        handleSwipe: select.isEmpty ? _handleSwipe : null,
-                      ),
+                      child: StreamBuilder<List<Message>?>(
+                          stream: conversationStream,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              // Handle error state
+                              print(
+                                  'Error listening to conversations: ${snapshot.error}');
+                              return Center(
+                                  child: Text(
+                                      'Something went wrong: ${snapshot.error}'));
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              // Handle loading state while waiting for the first data
+                              return Center(child: CircularProgressIndicator());
+                            }
+
+                            // --- Data is available! ---
+
+                            // Check if there are no conversations yet
+                            if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                              return Center(
+                                  child: Text(
+                                      'No conversations found. Start a new one!'));
+                            }
+
+                            // We have data, build the list of conversations
+                            final messages = snapshot.data!;
+
+                            return Chat(
+                              controller: itemScrollController,
+                              messages: messages,
+                              user: user!,
+                              handleMessageTap:
+                                  select.isEmpty ? _handleMessageTap : null,
+                              handleSwipe: select.isEmpty ? _handleSwipe : null,
+                            );
+                          }),
                     );
                   },
                 ),
@@ -204,7 +242,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
                   child: ChatInputArea(
                     focusNode: focusNode,
                     reply: replyMessage,
-                    currentUser: widget.user,
+                    currentUser: user!,
                     onCloseReply: () {
                       setState(() {
                         replyMessage = null;
@@ -295,10 +333,10 @@ class ChatPageState extends ConsumerState<ChatPage> {
             PopupMenuItem(
               child: const Text("Clear chat"),
               onTap: () async {
-                final state = await MySnackBar.showDeleteDialig(context);
-                if (state && mounted) {
-                  chat.deleteAllMessage(widget.room.id);
-                }
+                // final state = await MySnackBar.showDeleteDialig(context);
+                // if (state && mounted) {
+                //   chat.deleteAllMessage(widget.room.id);
+                // }
               },
             ),
           ],
@@ -306,7 +344,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
       ],
       title: InkWell(
         onTap: () {
-          MyRouter.myPush(context, const UserProfile());
+          // MyRouter.myPush(context, const UserProfile());
         },
         child: SizedBox(
           width: double.infinity,
@@ -319,7 +357,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CertifiedAccount(
-                    name: widget.room.name ?? "",
+                    name: widget.conversation?.name ?? "",
                     fontSize: 18,
                     certified: true,
                     // color: Colors.white,

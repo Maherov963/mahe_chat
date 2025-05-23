@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,6 +10,8 @@ import 'package:mahe_chat/features/chat/data/remote/chat_api.dart';
 import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:mahe_chat/features/chat/presentation/components/search_bar.dart';
 import 'package:mahe_chat/features/settings/presentation/pages/setting.dart';
+
+import 'chat_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -45,8 +45,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         drawer: _buildDrawer(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await ChatApi().createNewConversation(
-                conversationName: "KingDom", initialMemberUids: []);
+            await ChatApi().addMessageToConversation(
+                conversationId: "0pQEmEF6XAWWEKrTvHJg", messageText: "hello");
           },
           backgroundColor: Colors.blue.shade700,
           elevation: 5,
@@ -151,7 +151,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       child: ListTile(
         onTap: () {
-          // Navigate to chat screen
+          MyRouter.myPush(context, ChatPage());
         },
         leading: Stack(
           children: [

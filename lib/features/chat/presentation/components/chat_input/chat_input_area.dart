@@ -1,10 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'package:mahe_chat/app/components/chat_input/attache_sheet.dart';
-import 'package:mahe_chat/app/components/chat_input/mic_button.dart';
-import 'package:mahe_chat/app/components/chat_input/mic_hold_bar.dart';
-import 'package:mahe_chat/app/components/messages/reply_message.dart';
-import 'package:mahe_chat/app/components/my_snackbar.dart';
 import 'package:mahe_chat/app/utils/plugins/recorder_holder.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
@@ -12,6 +7,11 @@ import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/chat/presentation/components/chat_input/mic_button.dart';
+import 'package:mahe_chat/features/chat/presentation/components/chat_input/mic_hold_bar.dart';
+import 'package:mahe_chat/features/chat/presentation/components/messages/reply_message.dart';
+import 'package:mahe_chat/features/chat/presentation/components/my_snackbar.dart';
+import 'attache_sheet.dart';
 import 'chat_text_field.dart';
 import 'package:chat_bottom_container/chat_bottom_container.dart';
 

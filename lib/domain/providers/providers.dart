@@ -1,4 +1,3 @@
-import 'package:mahe_chat/app/components/chat_input/mic_button.dart';
 import 'package:mahe_chat/domain/providers/notifiers/arrow_button_notifier.dart';
 import 'package:mahe_chat/domain/providers/notifiers/auth_notifier.dart';
 import 'package:mahe_chat/domain/providers/notifiers/chat_provider.dart';
@@ -10,6 +9,7 @@ import 'package:mahe_chat/domain/providers/notifiers/room_notifieer.dart';
 import 'package:mahe_chat/domain/providers/notifiers/sound_notifier.dart';
 import 'package:mahe_chat/domain/providers/notifiers/theme_notifier.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/chat/presentation/components/chat_input/mic_button.dart';
 
 // final networkProvider = StateNotifierProvider<NetworkInfoImpl, bool>(
 //     (ref) => NetworkInfoImpl()..startStream());

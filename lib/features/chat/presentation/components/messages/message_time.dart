@@ -1,7 +1,8 @@
-import 'package:mahe_chat/app/components/messages/message_status_icon.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import 'message_status_icon.dart';
 
 class MessageTime extends StatelessWidget {
   const MessageTime({

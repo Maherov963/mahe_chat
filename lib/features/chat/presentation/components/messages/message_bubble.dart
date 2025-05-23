@@ -1,12 +1,3 @@
-import 'package:mahe_chat/app/components/messages/audio_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/custom_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/file_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/image_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/message_time.dart';
-import 'package:mahe_chat/app/components/messages/reply_message.dart';
-import 'package:mahe_chat/app/components/messages/system_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/text_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/video_message_bubble.dart';
 import 'package:mahe_chat/domain/models/messages/audio_message.dart';
 import 'package:mahe_chat/domain/models/messages/custom_message.dart';
 import 'package:mahe_chat/domain/models/messages/file_message.dart';
@@ -17,6 +8,16 @@ import 'package:mahe_chat/domain/models/messages/video_message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' hide TextDirection;
+
+import 'audio_message_bubble.dart';
+import 'custom_message_bubble.dart';
+import 'file_message_bubble.dart';
+import 'image_message_bubble.dart';
+import 'message_time.dart';
+import 'reply_message.dart';
+import 'system_message_bubble.dart';
+import 'text_message_bubble.dart';
+import 'video_message_bubble.dart';
 
 class MessageBubble extends StatelessWidget {
   final Message message;
