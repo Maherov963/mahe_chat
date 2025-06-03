@@ -4,10 +4,10 @@ import 'package:mahe_chat/domain/models/room/room.dart';
 import 'package:mahe_chat/domain/providers/notifiers/chat_provider.dart';
 import 'package:mahe_chat/app/utils/widgets/my_popup_menu.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
-import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
 import 'package:mahe_chat/features/chat/data/remote/chat_api.dart';
 import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:mahe_chat/features/music.dart';
@@ -36,7 +36,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
 
   Message? replyMessage;
 
-  void _handleSendPressed(String text) {
+  void _handleSendPressed(String text) async {
     // final textMessage = TextMessage(
     //   text: text,
     //   author: widget.user,
@@ -46,6 +46,8 @@ class ChatPageState extends ConsumerState<ChatPage> {
     //   roomId: widget.room.id,
     // );
     // _addMessage(textMessage);
+    await ChatApi().addMessageToConversation(
+        conversationId: "0pQEmEF6XAWWEKrTvHJg", messageText: text);
   }
 
   void _handleSendRecord(
@@ -92,9 +94,9 @@ class ChatPageState extends ConsumerState<ChatPage> {
   void _addMessage(Message message) {
     setState(() {
       replyMessage = null;
-      ref.read(chatProvider).addMessage(message, SendRecive.send);
+      // ref.read(chatProvider).addMessage(message, SendRecive.send);
 
-      ref.read(roomProvider).editLastmessageRoom(message);
+      // ref.read(roomProvider).editLastmessageRoom(message);
     });
   }
 
@@ -140,9 +142,9 @@ class ChatPageState extends ConsumerState<ChatPage> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final select = ref.watch(messageSelectProvider);
+    // final select = ref.watch(messageSelectProvider);
     final user = ref.read(authProvider).myUser;
-    final selectRead = ref.read(messageSelectProvider.notifier);
+    // final selectRead = ref.read(messageSelectProvider.notifier);
     // Call the function to get the stream
     final conversationStream =
         ChatApi().getMessagesStream(widget.conversation!.id!);
@@ -158,15 +160,15 @@ class ChatPageState extends ConsumerState<ChatPage> {
       );
     }
     return PopScope(
-      canPop: select.isEmpty,
+      // canPop: select.isEmpty,
       onPopInvoked: (didPop) {
         if (!didPop) {
-          selectRead.removeAll();
+          // selectRead.removeAll();
         }
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: select.isEmpty ? getGeneralAppBar() : getSelectedAppBar(),
+        // appBar: select.isEmpty ? getGeneralAppBar() : getSelectedAppBar(),
         body: Stack(
           alignment: Alignment.bottomCenter,
           children: [
@@ -194,7 +196,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
               children: [
                 Consumer(
                   builder: (context, ref, child) {
-                    final chat = ref.watch(chatProvider);
+                    // final chat = ref.watch(chatProvider);
                     return Expanded(
                       child: StreamBuilder<List<Message>?>(
                           stream: conversationStream,
@@ -231,8 +233,11 @@ class ChatPageState extends ConsumerState<ChatPage> {
                               messages: messages,
                               user: user!,
                               handleMessageTap:
-                                  select.isEmpty ? _handleMessageTap : null,
-                              handleSwipe: select.isEmpty ? _handleSwipe : null,
+                                  // select.isEmpty ? _handleMessageTap :
+                                  null,
+                              handleSwipe:
+                                  //  select.isEmpty ? _handleSwipe :
+                                  null,
                             );
                           }),
                     );
@@ -265,135 +270,135 @@ class ChatPageState extends ConsumerState<ChatPage> {
   }
 
   getSelectedAppBar() {
-    final select = ref.watch(messageSelectProvider);
-    final selectRead = ref.read(messageSelectProvider.notifier);
-    return AppBar(
-      title: Text(select.length.toString()),
-      actions: [
-        MyPopUpMenu(
-          list: [
-            MyPopUpMenu.getWithIcon(
-              "Info",
-              Icons.info_outline,
-              onTap: () {
-                selectRead.removeAll();
-              },
-            ),
-            MyPopUpMenu.getWithIcon(
-              "Delete",
-              Icons.delete,
-              // color: color10,
-              onTap: () {
-                selectRead.removeAll();
-                ref.read(chatProvider).deleteMessage(select);
-              },
-            ),
-            if (select.length == 1)
-              MyPopUpMenu.getWithIcon(
-                "Copy",
-                Icons.copy,
-                onTap: () {
-                  final message = ref
-                      .read(chatProvider)
-                      .messages
-                      .whereType<Message>()
-                      .firstWhere((e) => e.id == select.first) as TextMessage;
-                  Clipboard.setData(ClipboardData(text: message.text));
-                  selectRead.removeAll();
-                },
-              ),
-            MyPopUpMenu.getWithIcon(
-              "Reply",
-              Icons.reply,
-              onTap: () {
-                selectRead.removeAll();
-              },
-            ),
-          ],
-        ),
-      ],
-      leading: IconButton(
-        onPressed: () {
-          selectRead.removeAll();
-        },
-        icon: const Icon(Icons.arrow_back),
-      ),
-    );
+    // final select = ref.watch(messageSelectProvider);
+    // final selectRead = ref.read(messageSelectProvider.notifier);
+    // return AppBar(
+    //   title: Text(select.length.toString()),
+    //   actions: [
+    //     MyPopUpMenu(
+    //       list: [
+    //         MyPopUpMenu.getWithIcon(
+    //           "Info",
+    //           Icons.info_outline,
+    //           onTap: () {
+    //             selectRead.removeAll();
+    //           },
+    //         ),
+    //         MyPopUpMenu.getWithIcon(
+    //           "Delete",
+    //           Icons.delete,
+    //           // color: color10,
+    //           onTap: () {
+    //             selectRead.removeAll();
+    //             ref.read(chatProvider).deleteMessage(select);
+    //           },
+    //         ),
+    //         if (select.length == 1)
+    //           MyPopUpMenu.getWithIcon(
+    //             "Copy",
+    //             Icons.copy,
+    //             onTap: () {
+    //               final message = ref
+    //                   .read(chatProvider)
+    //                   .messages
+    //                   .whereType<Message>()
+    //                   .firstWhere((e) => e.id == select.first) as TextMessage;
+    //               Clipboard.setData(ClipboardData(text: message.text));
+    //               selectRead.removeAll();
+    //             },
+    //           ),
+    //         MyPopUpMenu.getWithIcon(
+    //           "Reply",
+    //           Icons.reply,
+    //           onTap: () {
+    //             selectRead.removeAll();
+    //           },
+    //         ),
+    //       ],
+    //     ),
+    //   ],
+    //   leading: IconButton(
+    //     onPressed: () {
+    //       selectRead.removeAll();
+    //     },
+    //     icon: const Icon(Icons.arrow_back),
+    //   ),
+    // );
   }
 
   getGeneralAppBar() {
-    final chat = ref.read(chatProvider);
+    // final chat = ref.read(chatProvider);
 
-    return AppBar(
-      forceMaterialTransparency: true,
-      actions: [
-        IconButton(onPressed: () {}, icon: const Icon(Icons.call_outlined)),
-        MyPopUpMenu(
-          list: [
-            PopupMenuItem(
-              child: const Text("Clear chat"),
-              onTap: () async {
-                // final state = await MySnackBar.showDeleteDialig(context);
-                // if (state && mounted) {
-                //   chat.deleteAllMessage(widget.room.id);
-                // }
-              },
-            ),
-          ],
-        ),
-      ],
-      title: InkWell(
-        onTap: () {
-          // MyRouter.myPush(context, const UserProfile());
-        },
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: Consumer(
-            builder: (context, ref, child) {
-              final chatProv = ref.watch(chatProvider);
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CertifiedAccount(
-                    name: widget.conversation?.name ?? "",
-                    fontSize: 18,
-                    certified: true,
-                    // color: Colors.white,
-                  ),
-                  if (chatProv.feedback != "")
-                    Text(
-                      chatProv.feedback,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        // color: Colors.white,
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
-        ),
-      ),
-      titleSpacing: 0,
-      leadingWidth: 66,
-      leading: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
-        child: InkWell(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          customBorder:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: const Row(
-            children: [
-              Icon(Icons.arrow_back),
-              Expanded(child: ImageHandler(path: AssetImg.mine)),
-            ],
-          ),
-        ),
-      ),
-    );
+    // return AppBar(
+    //   forceMaterialTransparency: true,
+    //   actions: [
+    //     IconButton(onPressed: () {}, icon: const Icon(Icons.call_outlined)),
+    //     MyPopUpMenu(
+    //       list: [
+    //         PopupMenuItem(
+    //           child: const Text("Clear chat"),
+    //           onTap: () async {
+    //             // final state = await MySnackBar.showDeleteDialig(context);
+    //             // if (state && mounted) {
+    //             //   chat.deleteAllMessage(widget.room.id);
+    //             // }
+    //           },
+    //         ),
+    //       ],
+    //     ),
+    //   ],
+    //   title: InkWell(
+    //     onTap: () {
+    //       // MyRouter.myPush(context, const UserProfile());
+    //     },
+    //     child: SizedBox(
+    //       width: double.infinity,
+    //       height: 50,
+    //       child: Consumer(
+    //         builder: (context, ref, child) {
+    //           final chatProv = ref.watch(chatProvider);
+    //           return Column(
+    //             crossAxisAlignment: CrossAxisAlignment.start,
+    //             mainAxisAlignment: MainAxisAlignment.center,
+    //             children: [
+    //               CertifiedAccount(
+    //                 name: widget.conversation?.name ?? "",
+    //                 fontSize: 18,
+    //                 certified: true,
+    //                 // color: Colors.white,
+    //               ),
+    //               if (chatProv.feedback != "")
+    //                 Text(
+    //                   chatProv.feedback,
+    //                   style: const TextStyle(
+    //                     fontSize: 12,
+    //                     // color: Colors.white,
+    //                   ),
+    //                 ),
+    //             ],
+    //           );
+    //         },
+    //       ),
+    //     ),
+    //   ),
+    //   titleSpacing: 0,
+    //   leadingWidth: 66,
+    //   leading: Padding(
+    //     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2),
+    //     child: InkWell(
+    //       onTap: () {
+    //         Navigator.pop(context);
+    //       },
+    //       customBorder:
+    //           RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    //       child: const Row(
+    //         children: [
+    //           Icon(Icons.arrow_back),
+    //           Expanded(child: ImageHandler(path: AssetImg.mine)),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }

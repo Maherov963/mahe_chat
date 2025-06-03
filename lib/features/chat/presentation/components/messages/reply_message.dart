@@ -2,7 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mahe_chat/domain/models/messages/reply_preview.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
-import 'package:mahe_chat/domain/providers/providers.dart';
+import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
 
 class ReplyMessage extends ConsumerWidget {
   const ReplyMessage({
@@ -97,7 +97,7 @@ class ReplyMessage extends ConsumerWidget {
       onTap: onReplyTap == null
           ? null
           : () {
-              onReplyTap!(replyPreview!.id);
+              // onReplyTap!(replyPreview!.id);
             },
       child: CustomPaint(
         painter: MyPaint(color: color),

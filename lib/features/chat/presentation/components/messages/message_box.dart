@@ -51,11 +51,11 @@ class _MessageBoxState extends ConsumerState<MessageBox> {
         : Directionality.of(context);
     return MySwipe(
       onLongPress: () {
-        selectRead.toggle(widget.message.id);
+        // selectRead.toggle(widget.message.id);
       },
       onTap: () {
         if (select.isNotEmpty) {
-          selectRead.toggle(widget.message.id);
+          // selectRead.toggle(widget.message.id);
         } else {
           widget.onMessageTap?.call(widget.message);
         }

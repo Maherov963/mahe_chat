@@ -45,8 +45,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         drawer: _buildDrawer(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            await ChatApi().addMessageToConversation(
-                conversationId: "0pQEmEF6XAWWEKrTvHJg", messageText: "hello");
+
           },
           backgroundColor: Colors.blue.shade700,
           elevation: 5,
@@ -151,7 +150,11 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       child: ListTile(
         onTap: () {
-          MyRouter.myPush(context, ChatPage());
+          MyRouter.myPush(
+              context,
+              ChatPage(
+                conversation: chat,
+              ));
         },
         leading: Stack(
           children: [
@@ -184,7 +187,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
         subtitle: Text(
-          "chat.lastMessage",
+          chat.id.toString(),
           style: TextStyle(
             color: Colors.grey.shade400,
             overflow: TextOverflow.ellipsis,

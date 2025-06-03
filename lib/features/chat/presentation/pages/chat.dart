@@ -9,7 +9,6 @@ import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-
 import '../components/messages/date_bubble.dart';
 import '../components/messages/message_box.dart';
 import '../components/messages/system_message_bubble.dart';
@@ -48,16 +47,16 @@ class _ChatState extends ConsumerState<Chat> {
   @override
   void didUpdateWidget(covariant Chat oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldLeangth != widget.messages.length) {
-      oldLeangth = widget.messages.length;
-      final result = calculateChatMessages(
-        widget.messages,
-        lastReadMessageId: null,
-      );
-      _chatMessages = result;
-      _refreshAutoScrollMapping();
-      _scrollToUnread();
-    }
+    // if (oldLeangth != widget.messages.length) {
+    oldLeangth = widget.messages.length;
+    final result = calculateChatMessages(
+      widget.messages,
+      lastReadMessageId: null,
+    );
+    _chatMessages = result;
+    _refreshAutoScrollMapping();
+    _scrollToUnread();
+    // }
   }
 
   void _refreshAutoScrollMapping() {

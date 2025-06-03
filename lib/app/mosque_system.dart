@@ -97,17 +97,18 @@ class _MyAppState extends ConsumerState<MyApp> {
             endIndent: 10,
             indent: 10,
           )),
-      home: HomePage(),
-      //  FutureBuilder(
-      //   future: ref.read(authProvider).getCashedUser(),
-      //   builder: (context, snapshot) {
-      //     if (ref.read(authProvider).myUser == null) {
-      //       return const AuthScreen();
-      //     } else {
-      //       return const ;
-      //     }
-      //   },
-      // ),
+      home: 
+      // HomePage(),
+       FutureBuilder(
+        future: ref.read(authProvider).getCashedUser(),
+        builder: (context, snapshot) {
+          if (ref.read(authProvider).myUser == null) {
+            return const AuthScreen();
+          } else {
+            return const HomePage();
+          }
+        },
+      ),
     );
   }
 }

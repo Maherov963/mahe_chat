@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
-import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
+import 'package:mahe_chat/domain/models/user/user.dart';
 
 class ChatApi {
   Future<String?> createNewConversation(
@@ -76,10 +76,22 @@ class ChatApi {
         .collection('conversations')
         .doc(conversationId)
         .collection('messages')
-        .orderBy('timestamp', descending: true)
+        .orderBy('timestamp', descending: false)
         .snapshots()
-        .map((snapshot) =>
-            snapshot.docs.map((doc) => Message.fromJson(doc.data())).toList());
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        log(doc.data().toString());
+        return TextMessage(
+            author: Profile(
+              id: doc["senderUid"],
+              username: doc["senderUid"],
+            ),
+            id: doc.id,
+            text: doc["text"],
+            createdAt: (doc["timestamp"] as Timestamp?)?.toDate()??DateTime.now());
+        // return Message.fromJson(doc.data());
+      }).toList();
+    });
   }
 
   String? getCurrentUserUid() {
