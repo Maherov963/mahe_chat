@@ -21,7 +21,7 @@ class ChatProvider extends ChangeNotifier {
   // });
 
   int get nextId {
-    return messages.isEmpty ? 1 : _messages.last.id + 1;
+    return 0;
   }
 
   // Soundpool pool = Soundpool.fromOptions(

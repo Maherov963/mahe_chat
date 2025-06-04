@@ -59,7 +59,7 @@ abstract class Message extends HiveObject {
   @HiveField(2)
 
   /// Unique ID of the message.
-  final int id;
+  final String id;
   @HiveField(3)
 
   /// Additional custom metadata or attributes related to the message.
@@ -100,7 +100,7 @@ abstract class Message extends HiveObject {
   Message copyWith({
     Profile? author,
     DateTime? createdAt,
-    int? id,
+    String? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
     ReplyPreview? replyPreview,

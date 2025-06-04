@@ -1,5 +1,6 @@
-import 'package:mahe_chat/app/pages/setting/setting_page.dart';
 import 'package:flutter/material.dart';
+
+import 'setting_page.dart';
 
 class ThemePage extends StatefulWidget {
   const ThemePage({super.key});

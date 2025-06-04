@@ -1,8 +1,9 @@
-import 'package:mahe_chat/app/components/my_scaffold.dart';
-import 'package:mahe_chat/app/pages/setting/language_page.dart';
-import 'package:mahe_chat/app/pages/setting/theme_page.dart';
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/my_scaffold.dart';
+import 'language_page.dart';
+import 'theme_page.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});

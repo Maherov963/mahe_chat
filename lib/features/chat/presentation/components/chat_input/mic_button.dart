@@ -1,10 +1,11 @@
-import 'package:mahe_chat/app/components/my_snackbar.dart';
 import 'package:mahe_chat/app/utils/widgets/my_filled_icon.dart';
 import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../my_snackbar.dart';
 
 class MicButton extends StatelessWidget {
   const MicButton({

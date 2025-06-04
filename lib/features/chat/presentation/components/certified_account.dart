@@ -1,6 +1,7 @@
-import 'package:mahe_chat/app/components/star_paint.dart';
 import 'package:mahe_chat/app/utils/widgets/my_text_button.dart';
 import 'package:flutter/material.dart';
+
+import 'star_paint.dart';
 
 class CertifiedAccount extends StatelessWidget {
   const CertifiedAccount({

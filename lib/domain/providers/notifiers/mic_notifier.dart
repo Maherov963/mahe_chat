@@ -1,6 +1,6 @@
-import 'package:mahe_chat/app/components/chat_input/mic_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/chat/presentation/components/chat_input/mic_button.dart';
 
 class MicProvider extends StateNotifier<MicController> {
   MicProvider() : super(MicController());

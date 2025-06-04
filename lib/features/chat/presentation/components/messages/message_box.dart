@@ -1,4 +1,3 @@
-import 'package:mahe_chat/app/components/messages/message_bubble.dart';
 import 'package:mahe_chat/app/utils/plugins/my_swipe.dart';
 import 'package:mahe_chat/data/extensions/extension.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
@@ -7,6 +6,7 @@ import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'circle_avatar._message.dart';
+import 'message_bubble.dart';
 
 class MessageBox extends ConsumerStatefulWidget {
   const MessageBox({
@@ -51,11 +51,11 @@ class _MessageBoxState extends ConsumerState<MessageBox> {
         : Directionality.of(context);
     return MySwipe(
       onLongPress: () {
-        selectRead.toggle(widget.message.id);
+        // selectRead.toggle(widget.message.id);
       },
       onTap: () {
         if (select.isNotEmpty) {
-          selectRead.toggle(widget.message.id);
+          // selectRead.toggle(widget.message.id);
         } else {
           widget.onMessageTap?.call(widget.message);
         }

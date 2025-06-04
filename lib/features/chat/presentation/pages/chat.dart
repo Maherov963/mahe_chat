@@ -1,11 +1,4 @@
 import 'dart:math';
-import 'package:mahe_chat/app/components/messages/date_bubble.dart';
-import 'package:mahe_chat/app/components/messages/message_box.dart';
-import 'package:mahe_chat/app/components/messages/system_message_bubble.dart';
-import 'package:mahe_chat/app/components/messages/typing_bubble.dart';
-import 'package:mahe_chat/app/components/messages/unread_header_bubble.dart';
-import 'package:mahe_chat/app/components/my_snackbar.dart';
-import 'package:mahe_chat/app/pages/chat_page/chat_list.dart';
 import 'package:mahe_chat/app/utils/plugins/calculate_message_list.dart';
 import 'package:mahe_chat/domain/models/messages/date_header.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
@@ -16,6 +9,13 @@ import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+import '../components/messages/date_bubble.dart';
+import '../components/messages/message_box.dart';
+import '../components/messages/system_message_bubble.dart';
+import '../components/messages/typing_bubble.dart';
+import '../components/messages/unread_header_bubble.dart';
+import '../components/my_snackbar.dart';
+import 'chat_list.dart';
 
 final Map<String, int> chatMessageAutoScrollIndexById = {};
 const unreadHeader = "UN_READ_HEADER";
@@ -47,16 +47,16 @@ class _ChatState extends ConsumerState<Chat> {
   @override
   void didUpdateWidget(covariant Chat oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldLeangth != widget.messages.length) {
-      oldLeangth = widget.messages.length;
-      final result = calculateChatMessages(
-        widget.messages,
-        lastReadMessageId: null,
-      );
-      _chatMessages = result;
-      _refreshAutoScrollMapping();
-      _scrollToUnread();
-    }
+    // if (oldLeangth != widget.messages.length) {
+    oldLeangth = widget.messages.length;
+    final result = calculateChatMessages(
+      widget.messages,
+      lastReadMessageId: null,
+    );
+    _chatMessages = result;
+    _refreshAutoScrollMapping();
+    _scrollToUnread();
+    // }
   }
 
   void _refreshAutoScrollMapping() {
