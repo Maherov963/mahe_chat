@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:mahe_chat/app/mosque_system.dart';
 import 'package:mahe_chat/data/datasources/local_db/hive_db.dart';
@@ -17,12 +18,9 @@ Future<void> initialize() async {
 }
 
 Future<void> initServer() async {
-  // const keyApplicationId = 'cGnR5gSRVLMXppoazutvD91xoiaHLeMv5m8z2K5y';
-  // const keyClientKey = '1xoL9230rcA547SqeGWTSOd2R0YDSrxQsdJB1Xr2';
-  // const keyParseServerUrl = 'https://parseapi.back4app.com';
-  // await Parse().initialize(keyApplicationId, keyParseServerUrl,
-  //     clientKey: keyClientKey, debug: true);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // Enable offline persistence with cache size
+  FirebaseFirestore.instance.settings.persistenceEnabled;
 }

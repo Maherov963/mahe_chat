@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -7,6 +9,7 @@ class MySnackBar {
     ContentType? contentType,
     String? title,
   }) {
+    log(content);
     Fluttertoast.cancel();
     Fluttertoast.showToast(
       msg: content,
