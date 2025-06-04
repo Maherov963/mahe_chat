@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
 import 'package:mahe_chat/features/auth/presentation/pages/auth.dart';
+<<<<<<< HEAD
 import 'package:mahe_chat/features/call/video_call_page.dart';
+=======
+>>>>>>> origin/main
 import 'package:mahe_chat/features/chat/presentation/pages/home.dart';
 
 class MyApp extends ConsumerStatefulWidget {
@@ -98,6 +101,7 @@ class _MyAppState extends ConsumerState<MyApp> {
             endIndent: 10,
             indent: 10,
           )),
+<<<<<<< HEAD
       home: CallPage(
         userId: "",
       ),
@@ -111,6 +115,20 @@ class _MyAppState extends ConsumerState<MyApp> {
       //     }
       //   },
       // ),
+=======
+      home: 
+      // HomePage(),
+       FutureBuilder(
+        future: ref.read(authProvider).getCashedUser(),
+        builder: (context, snapshot) {
+          if (ref.read(authProvider).myUser == null) {
+            return const AuthScreen();
+          } else {
+            return const HomePage();
+          }
+        },
+      ),
+>>>>>>> origin/main
     );
   }
 }

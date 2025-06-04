@@ -1,4 +1,3 @@
-import 'package:mahe_chat/app/pages/chat_page/chat.dart';
 import 'package:mahe_chat/app/utils/widgets/my_filled_icon.dart';
 import 'package:mahe_chat/domain/models/messages/date_header.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
@@ -7,6 +6,8 @@ import 'package:mahe_chat/domain/models/messages/unread_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
+
+import 'chat.dart';
 
 class ChatList extends StatelessWidget {
   final List<Object> messages;

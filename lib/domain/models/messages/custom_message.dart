@@ -29,7 +29,7 @@ class CustomMessage extends Message {
   Message copyWith({
     Profile? author,
     DateTime? createdAt,
-    int? id,
+    String? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
     ReplyPreview? replyPreview,

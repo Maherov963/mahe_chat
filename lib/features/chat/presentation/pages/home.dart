@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import 'dart:developer';
 
+=======
+>>>>>>> origin/main
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -13,6 +16,11 @@ import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:mahe_chat/features/chat/presentation/components/search_bar.dart';
 import 'package:mahe_chat/features/settings/presentation/pages/setting.dart';
 
+<<<<<<< HEAD
+=======
+import 'chat_page.dart';
+
+>>>>>>> origin/main
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -45,8 +53,12 @@ class _HomePageState extends ConsumerState<HomePage> {
         drawer: _buildDrawer(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
+<<<<<<< HEAD
             await ChatApi().createNewConversation(
                 conversationName: "KingDom", initialMemberUids: []);
+=======
+
+>>>>>>> origin/main
           },
           backgroundColor: Colors.blue.shade700,
           elevation: 5,
@@ -151,7 +163,15 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       child: ListTile(
         onTap: () {
+<<<<<<< HEAD
           // Navigate to chat screen
+=======
+          MyRouter.myPush(
+              context,
+              ChatPage(
+                conversation: chat,
+              ));
+>>>>>>> origin/main
         },
         leading: Stack(
           children: [
@@ -184,7 +204,11 @@ class _HomePageState extends ConsumerState<HomePage> {
           ),
         ),
         subtitle: Text(
+<<<<<<< HEAD
           "chat.lastMessage",
+=======
+          chat.id.toString(),
+>>>>>>> origin/main
           style: TextStyle(
             color: Colors.grey.shade400,
             overflow: TextOverflow.ellipsis,

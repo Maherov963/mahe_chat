@@ -1,9 +1,10 @@
-import 'package:mahe_chat/app/components/my_scaffold.dart';
-import 'package:mahe_chat/app/pages/setting/setting_page.dart';
 import 'package:mahe_chat/domain/providers/notifiers/language_notifier.dart';
 import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../components/my_scaffold.dart';
+import 'setting_page.dart';
 
 class LanguagePage extends StatefulWidget {
   const LanguagePage({super.key});

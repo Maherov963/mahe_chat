@@ -1,8 +1,9 @@
-import 'package:mahe_chat/app/components/certified_account.dart';
-import 'package:mahe_chat/app/components/image_handler.dart';
-import 'package:mahe_chat/app/components/image_view.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/certified_account.dart';
+import '../../components/image_handler.dart';
+import '../../components/image_view.dart';
 
 class UserProfileAppBar extends StatefulWidget {
   const UserProfileAppBar({
