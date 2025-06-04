@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+<<<<<<< HEAD
 import 'package:mahe_chat/app/pages/home/home_page.dart';
 import 'package:mahe_chat/app/router/router.dart';
 
+=======
+import 'package:mahe_chat/app/router/router.dart';
+
+import '../../../chat/presentation/pages/home.dart';
+
+>>>>>>> origin/main
 class SignupForm extends StatefulWidget {
   final VoidCallback toggleAuthMode;
 

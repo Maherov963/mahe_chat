@@ -1,8 +1,4 @@
-import 'package:mahe_chat/app/components/certified_account.dart';
-import 'package:mahe_chat/app/components/image_handler.dart';
-import 'package:mahe_chat/app/components/image_view.dart';
 import 'package:mahe_chat/app/pages/chat_page/chat_page.dart';
-import 'package:mahe_chat/app/pages/profile/user_profile.dart';
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:mahe_chat/app/utils/assets/assets_images.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';

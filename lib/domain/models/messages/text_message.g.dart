@@ -19,7 +19,7 @@ class TextMessageAdapter extends TypeAdapter<TextMessage> {
     return TextMessage(
       author: fields[0] as Profile,
       createdAt: fields[1] as DateTime?,
-      id: fields[2] as int,
+      id: fields[2] as String,
       metadata: (fields[3] as Map?)?.cast<String, dynamic>(),
       remoteId: fields[4] as int?,
       replyPreview: fields[5] as ReplyPreview?,
@@ -82,7 +82,11 @@ TextMessage _$TextMessageFromJson(Map<String, dynamic> json) => TextMessage(
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
+<<<<<<< HEAD
       id: (json['id'] as num).toInt(),
+=======
+      id: json['id'] as String,
+>>>>>>> origin/main
       metadata: json['metadata'] as Map<String, dynamic>?,
       remoteId: (json['remoteId'] as num?)?.toInt(),
       replyPreview: json['replyPreview'] == null
