@@ -85,7 +85,15 @@ SystemMessage _$SystemMessageFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
+<<<<<<< HEAD
       id: json['id'] as String,
+=======
+<<<<<<< HEAD
+      id: (json['id'] as num).toInt(),
+=======
+      id: json['id'] as String,
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
       metadata: json['metadata'] as Map<String, dynamic>?,
       remoteId: (json['remoteId'] as num?)?.toInt(),
       replyPreview: json['replyPreview'] == null

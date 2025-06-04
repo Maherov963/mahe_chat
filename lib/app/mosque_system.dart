@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
 import 'package:mahe_chat/features/auth/presentation/pages/auth.dart';
+<<<<<<< HEAD
+import 'package:mahe_chat/features/call/video_call_page.dart';
+=======
+>>>>>>> origin/main
 import 'package:mahe_chat/features/chat/presentation/pages/home.dart';
 
 class MyApp extends ConsumerStatefulWidget {
@@ -97,9 +101,30 @@ class _MyAppState extends ConsumerState<MyApp> {
             endIndent: 10,
             indent: 10,
           )),
+<<<<<<< HEAD
       home:
           // HomePage(),
           FutureBuilder(
+=======
+<<<<<<< HEAD
+      home: CallPage(
+        userId: "",
+      ),
+      //  FutureBuilder(
+      //   future: ref.read(authProvider).getCashedUser(),
+      //   builder: (context, snapshot) {
+      //     if (ref.read(authProvider).myUser == null) {
+      //       return const AuthScreen();
+      //     } else {
+      //       return const ;
+      //     }
+      //   },
+      // ),
+=======
+      home: 
+      // HomePage(),
+       FutureBuilder(
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
         future: ref.read(authProvider).getCashedUser(),
         builder: (context, snapshot) {
           if (ref.read(authProvider).myUser == null) {
@@ -109,6 +134,10 @@ class _MyAppState extends ConsumerState<MyApp> {
           }
         },
       ),
+<<<<<<< HEAD
+=======
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
     );
   }
 }

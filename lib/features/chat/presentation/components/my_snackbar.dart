@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 import 'dart:developer';
 
+=======
+<<<<<<< HEAD:lib/app/components/my_snackbar.dart
+=======
+import 'dart:developer';
+
+>>>>>>> origin/main:lib/features/chat/presentation/components/my_snackbar.dart
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
