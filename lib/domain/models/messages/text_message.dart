@@ -27,7 +27,7 @@ abstract class TextMessage extends Message {
   factory TextMessage({
     required Profile author,
     DateTime? createdAt,
-    required int id,
+    required String id,
     Map<String, dynamic>? metadata,
     int? remoteId,
     ReplyPreview? replyPreview,
@@ -52,7 +52,7 @@ abstract class TextMessage extends Message {
   Message copyWith({
     Profile? author,
     DateTime? createdAt,
-    int? id,
+    String? id,
     Map<String, dynamic>? metadata,
     int? remoteId,
     int? repliedMessageId,
@@ -86,7 +86,7 @@ class _TextMessage extends TextMessage {
   Message copyWith({
     dynamic author = _Unset,
     dynamic createdAt = _Unset,
-    int? id,
+    String? id,
     dynamic metadata = _Unset,
     dynamic previewData = _Unset,
     dynamic remoteId = _Unset,

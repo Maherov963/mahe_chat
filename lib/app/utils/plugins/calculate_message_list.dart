@@ -1,10 +1,8 @@
 import 'dart:developer';
-
 import 'package:mahe_chat/data/extensions/extension.dart';
 import 'package:mahe_chat/domain/models/messages/date_header.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
 import 'package:mahe_chat/domain/models/messages/system_message.dart';
-import 'package:mahe_chat/domain/models/messages/typing_message.dart';
 import 'package:mahe_chat/domain/models/messages/unread_header.dart';
 
 const String firstSystemMessage =
@@ -12,7 +10,7 @@ const String firstSystemMessage =
 
 List<Object> calculateChatMessages(
   List<Message> messages, {
-  int? lastReadMessageId,
+  String? lastReadMessageId,
 }) {
   log(messages.length.toString());
   final chatMessages = <Object>[];
@@ -46,7 +44,7 @@ List<Object> calculateChatMessages(
       chatMessages.add({
         "previousSameAuthor": false,
         "message": SystemMessage(
-          id: 0,
+          id: "0",
           text: firstSystemMessage,
           createdAt: message.createdAt!,
         ),

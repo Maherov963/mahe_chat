@@ -1,10 +1,11 @@
-import 'package:mahe_chat/app/components/image_handler.dart';
-import 'package:mahe_chat/app/components/image_view.dart';
 import 'package:mahe_chat/device/utils.dart';
 import 'package:mahe_chat/domain/models/messages/image_message.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:dismissible_page/dismissible_page.dart';
 import 'package:flutter/material.dart';
+
+import '../image_handler.dart';
+import '../image_view.dart';
 
 class ImageMessageBubble extends StatefulWidget {
   final ImageMessage message;

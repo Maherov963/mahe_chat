@@ -1,11 +1,12 @@
-import 'package:mahe_chat/app/components/certified_account.dart';
-import 'package:mahe_chat/app/components/icon_text_c_button.dart';
-import 'package:mahe_chat/app/pages/profile/my_sliver_abbbar.dart';
-import 'package:mahe_chat/app/pages/setting/setting_page.dart';
 import 'package:mahe_chat/app/utils/assets/assets_images.dart';
 import 'package:mahe_chat/app/utils/widgets/my_popup_menu.dart';
 import 'package:mahe_chat/data/extensions/extension.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/certified_account.dart';
+import '../../components/icon_text_c_button.dart';
+import '../setting/setting_page.dart';
+import 'my_sliver_abbbar.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});

@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
 import 'package:mahe_chat/app/components/my_snackbar.dart';
+=======
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:mahe_chat/core/utils/states_handler.dart';
 import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
 import 'package:mahe_chat/features/chat/presentation/pages/home.dart';
 
+<<<<<<< HEAD
+import '../../../chat/presentation/components/my_snackbar.dart';
+
+=======
+<<<<<<< HEAD
+=======
+import '../../../chat/presentation/components/my_snackbar.dart';
+
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
 class LoginForm extends ConsumerStatefulWidget {
   final VoidCallback toggleAuthMode;
 

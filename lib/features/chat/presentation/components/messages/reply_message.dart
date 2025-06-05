@@ -2,7 +2,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mahe_chat/domain/models/messages/reply_preview.dart';
 import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
+=======
+<<<<<<< HEAD:lib/app/components/messages/reply_message.dart
 import 'package:mahe_chat/domain/providers/providers.dart';
+=======
+import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
+>>>>>>> origin/main:lib/features/chat/presentation/components/messages/reply_message.dart
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
 
 class ReplyMessage extends ConsumerWidget {
   const ReplyMessage({
@@ -97,7 +105,15 @@ class ReplyMessage extends ConsumerWidget {
       onTap: onReplyTap == null
           ? null
           : () {
+<<<<<<< HEAD
+              // onReplyTap!(replyPreview!.id);
+=======
+<<<<<<< HEAD:lib/app/components/messages/reply_message.dart
               onReplyTap!(replyPreview!.id);
+=======
+              // onReplyTap!(replyPreview!.id);
+>>>>>>> origin/main:lib/features/chat/presentation/components/messages/reply_message.dart
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
             },
       child: CustomPaint(
         painter: MyPaint(color: color),

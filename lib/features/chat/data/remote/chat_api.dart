@@ -2,6 +2,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+<<<<<<< HEAD
+import 'package:mahe_chat/domain/models/messages/message.dart';
+import 'package:mahe_chat/domain/models/user/user.dart';
+
+=======
+<<<<<<< HEAD
 import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 
@@ -80,6 +86,12 @@ import 'package:parse_server_sdk_flutter/parse_server_sdk_flutter.dart';
 //     }
 //   }
 // }
+=======
+import 'package:mahe_chat/domain/models/messages/message.dart';
+import 'package:mahe_chat/domain/models/user/user.dart';
+
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
 class ChatApi {
   Future<String?> createNewConversation(
       {required String conversationName,
@@ -95,7 +107,15 @@ class ChatApi {
       final newConversationRef =
           await FirebaseFirestore.instance.collection('conversations').add({
         'name': conversationName,
+<<<<<<< HEAD
+        'members': initialMemberUids..add(currentUserUid), // List of UIDs
+=======
+<<<<<<< HEAD
         'members': initialMemberUids, // List of UIDs
+=======
+        'members': initialMemberUids..add(currentUserUid), // List of UIDs
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
         'createdAt': FieldValue.serverTimestamp(), // Use server timestamp!
         'createdBy': currentUserUid,
         // Add other initial fields if needed
@@ -105,9 +125,91 @@ class ChatApi {
       return newConversationRef.id; // Return the ID of the new conversation
     } catch (e) {
       log(e.toString());
+<<<<<<< HEAD
+      rethrow;
     }
   }
 
+=======
+<<<<<<< HEAD
+    }
+  }
+
+=======
+      rethrow;
+    }
+  }
+
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
+  Future<void> addMessageToConversation({
+    required String conversationId,
+    required String messageText,
+  }) async {
+    try {
+      final currentUserUid = getCurrentUserUid();
+      if (currentUserUid == null) {
+        throw Exception('User must be signed in to send messages');
+      }
+
+      // Reference to the messages subcollection
+      final messagesRef = FirebaseFirestore.instance
+          .collection('conversations')
+          .doc(conversationId)
+          .collection('messages');
+
+      // Add the new message
+      await messagesRef.add({
+        'senderUid': currentUserUid,
+        'text': messageText,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // Optionally update the conversation's lastMessage timestamp
+      await FirebaseFirestore.instance
+          .collection('conversations')
+          .doc(conversationId)
+          .update({
+        'lastMessage': FieldValue.serverTimestamp(),
+        'lastMessageText': messageText,
+      });
+    } catch (e) {
+      log('Error sending message: $e');
+      rethrow;
+    }
+  }
+
+  Stream<List<Message>> getMessagesStream(String conversationId) {
+    return FirebaseFirestore.instance
+        .collection('conversations')
+        .doc(conversationId)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) {
+        log(doc.data().toString());
+        return TextMessage(
+            author: Profile(
+              id: doc["senderUid"],
+              username: doc["senderUid"],
+            ),
+            id: doc.id,
+            text: doc["text"],
+<<<<<<< HEAD
+            createdAt:
+                (doc["timestamp"] as Timestamp?)?.toDate() ?? DateTime.now());
+=======
+            createdAt: (doc["timestamp"] as Timestamp?)?.toDate()??DateTime.now());
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
+        // return Message.fromJson(doc.data());
+      }).toList();
+    });
+  }
+
+<<<<<<< HEAD
+=======
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
   String? getCurrentUserUid() {
     final user = FirebaseAuth.instance.currentUser;
     return user?.uid; // Returns the UID or null if no user is signed in

@@ -1,8 +1,8 @@
-import 'package:mahe_chat/app/pages/setting/setting_page.dart';
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:mahe_chat/domain/providers/providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mahe_chat/features/settings/presentation/pages/setting.dart';
 import '../components/my_snackbar.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -106,7 +106,7 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                       onTap: () async {
                         Navigator.pop(context);
-                        MyRouter.myPush(context, const SettingPage());
+                        MyRouter.myPush(context, const SettingsPage());
                       },
                     ),
                     ListTile(

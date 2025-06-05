@@ -6,7 +6,15 @@ part 'reply_preview.g.dart';
 @HiveType(typeId: 8)
 class ReplyPreview {
   @HiveField(0)
+<<<<<<< HEAD
+  final String id;
+=======
+<<<<<<< HEAD
   final int id;
+=======
+  final String id;
+>>>>>>> origin/main
+>>>>>>> c3d9dd8539a2befed8f17a57d564e16b58c371f0
   @HiveField(1)
   final String senderName;
   @HiveField(2)
