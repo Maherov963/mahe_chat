@@ -25,6 +25,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    dynamic group_id;
     // Call the function to get the stream
     final conversationStream = ChatApi().getUserConversationsStream();
 
@@ -45,7 +46,13 @@ class _HomePageState extends ConsumerState<HomePage> {
         drawer: _buildDrawer(context),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-
+            group_id = ChatApi().createNewConversation(
+                conversationName: 'new group2',
+                initialMemberUids: [
+                  'Pl1hNmdncBYBHGhRMFVCQIIO3DH3',
+                  'WJmQobcY3naO5QM4RQUiZ3vnlt23'
+                      '6DNXEhX4IqNjavXd2U9f9QBVWc42'
+                ]);
           },
           backgroundColor: Colors.blue.shade700,
           elevation: 5,
@@ -129,7 +136,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                   isGroup: true,
                                   participants: []);
 
-                              return _buildChatItem(chat);
+                              return _buildChatItem(chat, group_id);
                             },
                           ),
                         );
@@ -141,7 +148,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ));
   }
 
-  Widget _buildChatItem(Conversation chat) {
+  Widget _buildChatItem(Conversation chat, dynamic group_id) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
@@ -153,6 +160,7 @@ class _HomePageState extends ConsumerState<HomePage> {
           MyRouter.myPush(
               context,
               ChatPage(
+                group_id,
                 conversation: chat,
               ));
         },

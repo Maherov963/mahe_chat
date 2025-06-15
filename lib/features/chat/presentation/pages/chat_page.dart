@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:mahe_chat/app/router/router.dart';
 import 'package:mahe_chat/app/utils/assets/assets_images.dart';
 import 'package:mahe_chat/domain/models/room/room.dart';
+import 'package:mahe_chat/domain/models/user/user.dart';
 import 'package:mahe_chat/domain/providers/notifiers/chat_provider.dart';
 import 'package:mahe_chat/app/utils/widgets/my_popup_menu.dart';
 import 'package:mahe_chat/domain/models/messages/message.dart';
@@ -8,19 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mahe_chat/features/auth/domain/provider/auth_notifier.dart';
+import 'package:mahe_chat/features/call/signaling.dart';
 import 'package:mahe_chat/features/chat/data/remote/chat_api.dart';
 import 'package:mahe_chat/features/chat/domain/models/conversation.dart';
 import 'package:mahe_chat/features/music.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 
-import '../components/certified_account.dart';
 import '../components/chat_input/chat_input_area.dart';
-import '../components/image_handler.dart';
+
 import 'chat.dart';
 
 class ChatPage extends ConsumerStatefulWidget {
+  final String group_id;
   final Conversation? conversation;
-  const ChatPage({
+  const ChatPage(
+    this.group_id, {
     super.key,
     this.conversation,
   });
@@ -36,6 +41,22 @@ class ChatPageState extends ConsumerState<ChatPage> {
 
   Message? replyMessage;
 
+  Future<List<String>> getConversationMembers(String conversationId) async {
+    final doc = await FirebaseFirestore.instance
+        .collection('conversations')
+        .doc(conversationId)
+        .get();
+
+    if (doc.exists) {
+      final data = doc.data();
+      if (data != null && data['members'] != null) {
+        return List<String>.from(data['members']);
+      }
+    }
+
+    return [];
+  }
+
   void _handleSendPressed(String text) async {
     // final textMessage = TextMessage(
     //   text: text,
@@ -47,7 +68,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
     // );
     // _addMessage(textMessage);
     await ChatApi().addMessageToConversation(
-        conversationId: "0pQEmEF6XAWWEKrTvHJg", messageText: text);
+        conversationId: "IR8Gc31xKVmrG1NXGAuO", messageText: text);
   }
 
   void _handleSendRecord(
@@ -138,6 +159,196 @@ class ChatPageState extends ConsumerState<ChatPage> {
     //   _addMessage(message);
     // }
   }
+  bool isCallAnswered = false;
+  bool isWaitingForAnswer = false;
+  Signaling? _signaling;
+  RTCVideoRenderer _localRenderer = RTCVideoRenderer();
+  RTCVideoRenderer _remoteRenderer = RTCVideoRenderer();
+  BuildContext? _callingDialogContext;
+
+  @override
+  void initState() {
+    super.initState();
+    _initRenderers();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final user = ref.read(authProvider).myUser!;
+      _signaling = Signaling()
+        ..onLocalStream = (stream) {
+          _localRenderer.srcObject = stream;
+        }
+        ..onAddRemoteStream = (stream) {
+          _remoteRenderer.srcObject = stream;
+          _closeCallingDialog(); // ✅ أغلق نافذة الانتظار عندما يتم الرد
+          _showCallScreen(); // ✅ افتح شاشة المكالمة
+        }
+        ..onRemoveRemoteStream = () {
+          _remoteRenderer.srcObject = null;
+        }
+        ..onDisconnect = () {
+          _closeCallingDialog();
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Call disconnected')),
+          );
+        }
+        ..onIncomingCall = (callerId, roomId) {
+          _showIncomingCallDialog(callerId, roomId); // ✅ الآن ستعمل
+        }
+        ..listenForCalls(user.id!);
+    });
+  }
+
+  void _showCallingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        _callingDialogContext = ctx;
+        return AlertDialog(
+          title: Text('Calling...'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text('Waiting for the other user to answer...'),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _closeCallingDialog() {
+    if (_callingDialogContext != null) {
+      Navigator.of(_callingDialogContext!).pop();
+      _callingDialogContext = null;
+    }
+  }
+
+  Future<void> _initRenderers() async {
+    await _localRenderer.initialize();
+    await _remoteRenderer.initialize();
+  }
+
+  void _showIncomingCallDialog(String callerId, String rid) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text('Incoming Call'),
+          content: Text('User $callerId is calling you.'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  _signaling?.declineCall(rid);
+                  Navigator.of(context).pop();
+                },
+                child: Text('Decline')),
+            ElevatedButton(
+                onPressed: () {
+                  _signaling?.answerCall(rid);
+                  Navigator.of(context).pop();
+                  _showCallScreen();
+                },
+                child: Text('Accept')),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showCallScreen() {
+    Navigator.push(context, MaterialPageRoute(builder: (_) {
+      return Scaffold(
+        appBar: AppBar(title: Text('Voice Call')),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (_localRenderer.srcObject != null) Text('You are in a call'),
+            ElevatedButton(
+              onPressed: () {
+                _signaling?.hangUp();
+                Navigator.of(context).pop();
+              },
+              child: Text('Hang Up'),
+            ),
+          ],
+        ),
+      );
+    }));
+  }
+
+  void _startCall() {
+    final user = ref.read(authProvider).myUser!;
+    final myId = user.id;
+
+    final otherProfile = widget.conversation!.participants!.firstWhere(
+      (profile) => profile.id != myId,
+      orElse: () => Profile(id: null),
+    );
+
+    final otherId = otherProfile.id;
+    if (otherId == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('لا يوجد مستخدم آخر للمكالمة.')),
+      );
+      return;
+    }
+
+    _signaling?.callUser(myId!, otherId);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showCallingDialog();
+    });
+  }
+
+  void _showWaitingDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) {
+        return StatefulBuilder(builder: (context, setStateDialog) {
+          return AlertDialog(
+            title: Text(isCallAnswered ? "متصل" : "جارٍ الاتصال..."),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                isCallAnswered
+                    ? Text("تم الرد على المكالمة")
+                    : CircularProgressIndicator(),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  _signaling?.hangUp();
+                  Navigator.of(context).pop();
+                },
+                child: Text("إلغاء"),
+              ),
+            ],
+          );
+        });
+      },
+    );
+  }
+
+  void dispose() {
+    _localRenderer.dispose();
+    _remoteRenderer.dispose();
+    super.dispose();
+  }
+
+  AppBar get _appBar => AppBar(
+        title: Text(widget.conversation?.name ?? "Chat"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.call),
+            onPressed: _startCall,
+          ),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +364,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
     if (conversationStream == Stream.empty()) {
       // Return a widget indicating the user needs to log in or similar
       return Scaffold(
-        appBar: AppBar(title: Text('My Chats')),
+        appBar: _appBar,
         body: Center(
           child: Text('Please log in to see your conversations.'),
         ),
@@ -167,6 +378,7 @@ class ChatPageState extends ConsumerState<ChatPage> {
         }
       },
       child: Scaffold(
+        appBar: _appBar,
         resizeToAvoidBottomInset: false,
         // appBar: select.isEmpty ? getGeneralAppBar() : getSelectedAppBar(),
         body: Stack(
@@ -263,6 +475,13 @@ class ChatPageState extends ConsumerState<ChatPage> {
                 )
               ],
             ),
+            if (_remoteRenderer.srcObject != null)
+              Positioned(
+                bottom: 100,
+                left: 20,
+                child:
+                    CircleAvatar(child: Icon(Icons.call, color: Colors.white)),
+              ),
           ],
         ),
       ),
